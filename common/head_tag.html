@@ -668,8 +668,9 @@
                                 				    
                                 				    {{#if (eq category tag.productCategory)}} 
                                 				    <li id="{{tag.tagName}}">
-                                		                {{input type="checkbox" name=tag.tagName change=(action "updateModelTags" value='target' ) checked=tag.isChecked }} {{tag.tagName}}
-                                		            </li>      
+                                		                <label id="{{tag.tagName}}">{{input type="checkbox" name=tag.tagName change=(action "updateModelTags" value='target' ) checked=tag.isChecked }} 
+                                		                 {{tag.tagName}}</label>
+                                		            </li>   
                                 		            {{/if}}
                                 		            
                                 		        {{/each}}
