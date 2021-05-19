@@ -1,0 +1,63 @@
+{{#if composerComponent.canEditTags}}
+    {{#unless model.viewFullscreen}}
+        <div class="select-tags-section {{if composerComponent.showPreview 'with-preview'}}" tabindex="5">
+            <div class="select-tags-header">
+                <div class="tag-text-area">
+                    <div class="seleted-tag-area">
+                        {{#each model.tags as |tag|}}
+                            <span class="seleted-tag-wrapper">
+                                {{#d-button
+                                translatedTitle=tag
+                                icon="times"
+                                action=(action composerComponent.actions.removeTag)
+                                actionParam=tag
+                                class="selected-tag"
+                                }}
+                                {{discourse-tag tag noHref=true}}
+                                {{/d-button}}
+                            </span>
+                        {{/each}}
+                    </div>
+                    <div class="tag-input-area">
+                        {{input type="text" value=composerComponent.tagInputValue key-down=(action
+                        composerComponent.actions.onKeyDown) key-up=(action composerComponent.actions.addTagByKeyPress)
+                        class="tag-input" placeholder="select below or type here…" }}
+                    </div>
+                </div>
+                <div class="add-tag-btn">
+                    {{#d-button
+                        translatedTitle="Add Tag"
+                        action=(action composerComponent.actions.addTag)
+                        actionParam=composerComponent.tagInputValue
+                    }}
+                        + {{#unless site.mobileView}}Add{{/unless}}
+                    {{/d-button}}
+                </div>
+            </div>
+            <div class="select-tags-body">
+                <div class="select-tags-title">
+                    <h3>Select Tags</h3>
+                </div>
+                <div class="tag-list-section">
+                    {{#each composerComponent.sagProductCategories as |category|}}
+                        <div id={{category}} class="select-tag-category">
+                            <ul>
+                                {{#each composerComponent.productTags as |tag|}}
+                                    {{#if (eq category tag.productCategory)}}
+                                        <li id="{{tag.tagName}}">
+                                            <label id="{{tag.tagName}}">{{input type="checkbox" name=tag.tagName change=(action
+                                                composerComponent.actions.updateModelTags value="target") checked=tag.isChecked }}
+                                                {{tag.tagName}}
+                                            </label>
+                                        </li>
+                                    {{/if}}
+                                {{/each}}
+                            </ul>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+        {{popup-input-tip validation=composerComponent.tagValidation}}
+    {{/unless}}
+{{/if}}
