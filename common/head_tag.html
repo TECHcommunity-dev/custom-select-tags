@@ -25,7 +25,7 @@
                 : this.keyValueStore.get("composer.showPreview") || "true";
             this.set("showPreview", val === "true");
             
-            //Getting Product Tags from JSON file
+            //Getting Product Tags from JSON file [Note: currently Ajax call is not in use]
                 var jsonData;
                 //Set Ajax global async property to false to load "sag-product-tags.json" file data before rendering template
                 $.ajaxSetup({async: false});
@@ -38,7 +38,7 @@
                 //Set Ajax global async property to true [Reset the value as we set it to false before loading JSON data]
                  $.ajaxSetup({async: true});
              
-            //Setting JSON data to sagProductTags property
+            	//Setting JSON data to sagProductTags property
                 if(jsonData){
                     this.set('sagProductTags', jsonData);    
                 }
@@ -54,16 +54,14 @@
                     this.get('productTags').pushObject(Ember.Object.create({productCategory: productCategory, tagName: tag, isChecked: false}));
                 });
             });
-            this._super(...arguments)
+            
+	    this._super(...arguments);
         },
         validateTag(tag){
-            
-            var regex = /^(.*)[!@#,\$%\^\&*\)\(+=._]+(.*)$/g;
-            
+            var regex = /^(.*)[!@#,\$%\^\&*\)\(+=._]+(.*)$/ig;
             return !regex.test(tag);
         },
         actions: {
-            
             /*This action is called when State Changes of any check box under Select Tags section
                 Purpose: To add or remove tags from "model.tags" array based on checkbox selection
             */
@@ -79,26 +77,25 @@
                     this.model.set("tags", Ember.A());
                 }
                 
-
-                //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
+		//Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
                 //var sagTagObj= this.get('productTags').findBy("tagName", tagName);
-		var sagTagObj = this.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tagName.toLowerCase());
+		var sagTagObj = this.composerComponent.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tagName.toLowerCase());
                 
                 //If checbox is selected the add tagName to "model.tags" array.
                 if(isChecked){
-
                     Ember.set(sagTagObj,"isChecked", true);
-                    
                     //Auto select Parent Tag if child is selected.
-                    this.send('autoSelectParentTag',sagTagObj);
-                    
+                    //this.send('autoSelectParentTag',sagTagObj);
+                    this.composerComponent.send("autoSelectParentTag", sagTagObj);
                     //Add tag to model
-                    this.model.tags.pushObject(tagName);   
+                    if(this.model.tags.findIndex(item => item.toLowerCase() === sagTagObj.tagName.toLowerCase()) == -1){
+                        this.model.tags.pushObject(tagName);       
+                    }
                     
                     //auto select API-Management tag if api-gateway, api-portal, microgateway, appmesh, centrasite or soa are selected - Mariela     
                     if(sagTagObj.tagName == "API-Gateway" || sagTagObj.tagName == "API-Portal" || sagTagObj.tagName == "Microgateway" ||
                     sagTagObj.tagName == "AppMesh" || sagTagObj.tagName == "CentraSite" || sagTagObj.tagName == "SOA") {
-                        var api_management= this.get('productTags').findBy("tagName", "API-Management");
+                        var api_management= this.composerComponent.get('productTags').findBy("tagName", "API-Management");
                             if(this.model.tags.indexOf(api_management.tagName) == -1) {
                                 Ember.set(api_management,"isChecked", true);
                                 this.model.tags.pushObject(api_management.tagName);
@@ -107,7 +104,7 @@
                     
                     //auto select BPM if bam or mws-caf-task-engine are selected - Mariela
                     if(sagTagObj.tagName == "BAM" || sagTagObj.tagName == "MWS-CAF-Task-Engine") {
-                        var bpm = this.get('productTags').findBy("tagName", "BPM");
+                        var bpm = this.composerComponent.get('productTags').findBy("tagName", "BPM");
                             if(this.model.tags.indexOf(bpm.tagName) == -1) {
                                 Ember.set(bpm,"isChecked", true);
                                 this.model.tags.pushObject(bpm.tagName);
@@ -116,7 +113,7 @@
                     
                     //auto select mainframe-integration if entirex, applinx or connx are selected- Mariela
                     if(sagTagObj.tagName == "EntireX" || sagTagObj.tagName == "ApplinX" || sagTagObj.tagName == "CONNX") {
-                        var mainframe_integration = this.get('productTags').findBy("tagName", "Mainframe-Integration");
+                        var mainframe_integration = this.composerComponent.get('productTags').findBy("tagName", "Mainframe-Integration");
                             if(this.model.tags.indexOf(mainframe_integration.tagName) == -1) {
                                 Ember.set(mainframe_integration,"isChecked", true);
                                 this.model.tags.pushObject(mainframe_integration.tagName);
@@ -126,7 +123,7 @@
                     //auto select b2b_integration if webmethods.io b2b, edi or managed file transfer are selected- Mariela
                     if(sagTagObj.tagName == "webmethods-io-B2B" || sagTagObj.tagName == "EDI" || 
                     sagTagObj.tagName == "Managed-File-Transfer") {
-                        var b2b_integration = this.get('productTags').findBy("tagName", "B2B-Integration");
+                        var b2b_integration = this.composerComponent.get('productTags').findBy("tagName", "B2B-Integration");
                             if(this.model.tags.indexOf(b2b_integration.tagName) == -1) {
                                 Ember.set(b2b_integration,"isChecked", true);
                                 this.model.tags.pushObject(b2b_integration.tagName);
@@ -135,7 +132,7 @@
                     
                     //auto select Adabas if Adabas-on-Mainframes or Adabas-on-Linux are selected- Mariela
                     if(sagTagObj.tagName == "Adabas-on-Mainframes" || sagTagObj.tagName == "Adabas-on-Linux") {
-                        var adabas = this.get('productTags').findBy("tagName", "Adabas");
+                        var adabas = this.composerComponent.get('productTags').findBy("tagName", "Adabas");
                             if(this.model.tags.indexOf(adabas.tagName) == -1) {
                                 Ember.set(adabas,"isChecked", true);
                                 this.model.tags.pushObject(adabas.tagName);
@@ -145,7 +142,7 @@
                     //auto select Natural if Natural-on-Mainframes, Natural-on-Linux or NaturalONE are selected - Mariela
                     if(sagTagObj.tagName == "Natural-on-Mainframes" || sagTagObj.tagName == "Natural-on-Linux" ||
                     sagTagObj.tagName == "NaturalONE") {
-                        var natural = this.get('productTags').findBy("tagName", "Natural");
+                        var natural = this.composerComponent.get('productTags').findBy("tagName", "Natural");
                             if(this.model.tags.indexOf(natural.tagName) == -1) {
                                 Ember.set(natural,"isChecked", true);
                                 this.model.tags.pushObject(natural.tagName);
@@ -155,7 +152,7 @@
                     //auto select Cumulocity-IoT if IoT-Device-Connectivity, IoT-Data-Analytics, IoT-Edge, IoT-Solution-Accelerators or IoT-Platform are selected - Mariela
                     if(sagTagObj.tagName == "IoT-Device-Connectivity" || sagTagObj.tagName == "IoT-Data-Analytics" ||
                     sagTagObj.tagName == "IoT-Edge"  || sagTagObj.tagName == "IoT-Solution-Accelerators" || sagTagObj.tagName == "IoT-Platform") {
-                        var cumulocity = this.get('productTags').findBy("tagName", "Cumulocity-IoT");
+                        var cumulocity = this.composerComponent.get('productTags').findBy("tagName", "Cumulocity-IoT");
                             if(this.model.tags.indexOf(cumulocity.tagName) == -1) {
                                 Ember.set(cumulocity,"isChecked", true);
                                 this.model.tags.pushObject(cumulocity.tagName);
@@ -166,7 +163,7 @@
                     if(sagTagObj.tagName == "webMethods-io-Integration" || sagTagObj.tagName == "Adapters-and-E-Standards" ||
                     sagTagObj.tagName == "Service-Designer"  || sagTagObj.tagName == "Cloud-Container" || sagTagObj.tagName == "CloudStreams"
                     || sagTagObj.tagName == "Flow-and-Java-Services" || sagTagObj.tagName == "Free-Trial") {
-                        var esb = this.get('productTags').findBy("tagName", "Integration-and-ESB");
+                        var esb = this.composerComponent.get('productTags').findBy("tagName", "Integration-and-ESB");
                             if(this.model.tags.indexOf(esb.tagName) == -1) {
                                 Ember.set(esb,"isChecked", true);
                                 this.model.tags.pushObject(esb.tagName);
@@ -176,16 +173,15 @@
                 else{ //Else remove tagName to "model.tags" array.
                 
                 Ember.set(sagTagObj,"isChecked", false);
-                    this.model.tags.removeObject(tagName);
                 
                 //auto deselect api-gateway and api-portal if API-Management is deselected - Mariela 
                     if(sagTagObj.tagName == "API-Management") {
-                        var api_gateway = this.get('productTags').findBy("tagName", "API-Gateway");
-                        var api_portal = this.get('productTags').findBy("tagName", "API-Portal");
-                        var microgateway = this.get('productTags').findBy("tagName", "Microgateway");
-                        var appmesh = this.get('productTags').findBy("tagName", "AppMesh");
-                        var centrasite = this.get('productTags').findBy("tagName", "CentraSite");
-                        var soa = this.get('productTags').findBy("tagName", "SOA");
+                        var api_gateway = this.composerComponent.get('productTags').findBy("tagName", "API-Gateway");
+                        var api_portal = this.composerComponent.get('productTags').findBy("tagName", "API-Portal");
+                        var microgateway = this.composerComponent.get('productTags').findBy("tagName", "Microgateway");
+                        var appmesh = this.composerComponent.get('productTags').findBy("tagName", "AppMesh");
+                        var centrasite = this.composerComponent.get('productTags').findBy("tagName", "CentraSite");
+                        var soa = this.composerComponent.get('productTags').findBy("tagName", "SOA");
                         Ember.set(api_gateway,"isChecked", false);
                         Ember.set(api_portal,"isChecked", false);
                         Ember.set(microgateway,"isChecked", false);
@@ -202,8 +198,8 @@
                     
                 //auto deselect tags if BPM is deselected - Mariela 
                     if(sagTagObj.tagName == "BPM") {
-                        var bam = this.get('productTags').findBy("tagName", "BAM");
-                        var mws = this.get('productTags').findBy("tagName", "MWS-CAF-Task-Engine");
+                        var bam = this.composerComponent.get('productTags').findBy("tagName", "BAM");
+                        var mws = this.composerComponent.get('productTags').findBy("tagName", "MWS-CAF-Task-Engine");
                         Ember.set(bam,"isChecked", false);
                         Ember.set(mws,"isChecked", false);
                         this.model.tags.removeObject(bam.tagName);
@@ -212,9 +208,9 @@
                     
                 //auto deselect tags if Mainframe-Integration is deselected - Mariela 
                     if(sagTagObj.tagName == "Mainframe-Integration") {
-                        var entirex = this.get('productTags').findBy("tagName", "EntireX");
-                        var applinx = this.get('productTags').findBy("tagName", "ApplinX");
-                        var connx = this.get('productTags').findBy("tagName", "CONNX");
+                        var entirex = this.composerComponent.get('productTags').findBy("tagName", "EntireX");
+                        var applinx = this.composerComponent.get('productTags').findBy("tagName", "ApplinX");
+                        var connx = this.composerComponent.get('productTags').findBy("tagName", "CONNX");
                         Ember.set(entirex,"isChecked", false);
                         Ember.set(applinx,"isChecked", false);
                         Ember.set(connx,"isChecked", false);
@@ -225,9 +221,9 @@
                     
                 //auto deselect tags if B2B-Integration is deselected - Mariela 
                     if(sagTagObj.tagName == "B2B-Integration") {
-                        var webmethods_io_b2b = this.get('productTags').findBy("tagName", "webmethods-io-B2B");
-                        var edi = this.get('productTags').findBy("tagName", "EDI");
-                        var managed_file_transfer = this.get('productTags').findBy("tagName", "Managed-File-Transfer");
+                        var webmethods_io_b2b = this.composerComponent.get('productTags').findBy("tagName", "webmethods-io-B2B");
+                        var edi = this.composerComponent.get('productTags').findBy("tagName", "EDI");
+                        var managed_file_transfer = this.composerComponent.get('productTags').findBy("tagName", "Managed-File-Transfer");
                         Ember.set(webmethods_io_b2b,"isChecked", false);
                         Ember.set(edi,"isChecked", false);
                         Ember.set(managed_file_transfer,"isChecked", false);
@@ -237,8 +233,8 @@
                     }
                 //auto deselect tags if adabas is deselected - Mariela 
                     if(sagTagObj.tagName == "Adabas") {
-                        var adabas_on_mainframes = this.get('productTags').findBy("tagName", "Adabas-on-Mainframes");
-                        var adabas_on_linux = this.get('productTags').findBy("tagName", "Adabas-on-Linux");
+                        var adabas_on_mainframes = this.composerComponent.get('productTags').findBy("tagName", "Adabas-on-Mainframes");
+                        var adabas_on_linux = this.composerComponent.get('productTags').findBy("tagName", "Adabas-on-Linux");
                         Ember.set(adabas_on_mainframes,"isChecked", false);
                         Ember.set(adabas_on_linux,"isChecked", false);
                         this.model.tags.removeObject(adabas_on_mainframes.tagName);
@@ -247,9 +243,9 @@
                     
                 //auto deselect tags if natural is deselected - Mariela 
                     if(sagTagObj.tagName == "Natural") {
-                        var natural_on_mainframes = this.get('productTags').findBy("tagName", "Natural-on-Mainframes");
-                        var natural_on_linux = this.get('productTags').findBy("tagName", "Natural-on-Linux");
-                        var naturalone = this.get('productTags').findBy("tagName", "NaturalONE");
+                        var natural_on_mainframes = this.composerComponent.get('productTags').findBy("tagName", "Natural-on-Mainframes");
+                        var natural_on_linux = this.composerComponent.get('productTags').findBy("tagName", "Natural-on-Linux");
+                        var naturalone = this.composerComponent.get('productTags').findBy("tagName", "NaturalONE");
                         Ember.set(natural_on_mainframes,"isChecked", false);
                         Ember.set(natural_on_linux,"isChecked", false);
                         Ember.set(naturalone,"isChecked", false);
@@ -260,11 +256,11 @@
                     
                     //auto deselect tags if Cumulocity-IoT is deselected - Mariela 
                     if(sagTagObj.tagName == "Cumulocity-IoT") {
-                        var iot_device = this.get('productTags').findBy("tagName", "IoT-Device-Connectivity");
-                        var iot_data = this.get('productTags').findBy("tagName", "IoT-Data-Analytics");
-                        var iot_edge = this.get('productTags').findBy("tagName", "IoT-Edge");
-                        var iot_solution = this.get('productTags').findBy("tagName", "IoT-Solution-Accelerators");
-                        var iot_platform = this.get('productTags').findBy("tagName", "IoT-Platform");
+                        var iot_device = this.composerComponent.get('productTags').findBy("tagName", "IoT-Device-Connectivity");
+                        var iot_data = this.composerComponent.get('productTags').findBy("tagName", "IoT-Data-Analytics");
+                        var iot_edge = this.composerComponent.get('productTags').findBy("tagName", "IoT-Edge");
+                        var iot_solution = this.composerComponent.get('productTags').findBy("tagName", "IoT-Solution-Accelerators");
+                        var iot_platform = this.composerComponent.get('productTags').findBy("tagName", "IoT-Platform");
                         Ember.set(iot_device,"isChecked", false);
                         Ember.set(iot_data,"isChecked", false);
                         Ember.set(iot_edge,"isChecked", false);
@@ -274,18 +270,18 @@
                         this.model.tags.removeObject(iot_data.tagName);
                         this.model.tags.removeObject(iot_edge.tagName);
                         this.model.tags.removeObject(iot_solution.tagName);
-                        this.model.tags.removeObject(iot_paltform.tagName);
+                        this.model.tags.removeObject(iot_platform.tagName);
                     }
                     
                     //auto deselect tags if Integration-and-ESB is deselected - Mariela 
                     if(sagTagObj.tagName == "Integration-and-ESB") {
-                        var webmethods_io_integration = this.get('productTags').findBy("tagName", "webMethods-io-Integration");
-                        var adapters_e_standarts = this.get('productTags').findBy("tagName", "Adapters-and-E-Standards");
-                        var service_designer = this.get('productTags').findBy("tagName", "Service-Designer");
-                        var cloud_container = this.get('productTags').findBy("tagName", "Cloud-Container");
-                        var cloudstreams = this.get('productTags').findBy("tagName", "CloudStreams");
-                        var flow_java_services = this.get('productTags').findBy("tagName", "Flow-and-Java-Services");
-                        var free_trial = this.get('productTags').findBy("tagName", "Free-Trial");
+                        var webmethods_io_integration = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-Integration");
+                        var adapters_e_standarts = this.composerComponent.get('productTags').findBy("tagName", "Adapters-and-E-Standards");
+                        var service_designer = this.composerComponent.get('productTags').findBy("tagName", "Service-Designer");
+                        var cloud_container = this.composerComponent.get('productTags').findBy("tagName", "Cloud-Container");
+                        var cloudstreams = this.composerComponent.get('productTags').findBy("tagName", "CloudStreams");
+                        var flow_java_services = this.composerComponent.get('productTags').findBy("tagName", "Flow-and-Java-Services");
+                        var free_trial = this.composerComponent.get('productTags').findBy("tagName", "Free-Trial");
                         Ember.set(webmethods_io_integration,"isChecked", false);
                         Ember.set(adapters_e_standarts,"isChecked", false);
                         Ember.set(service_designer,"isChecked", false);
@@ -302,11 +298,9 @@
                         this.model.tags.removeObject(free_trial.tagName);
                     }
                     
-
                     Ember.set(sagTagObj,"isChecked", false);
-                    this.model.tags.removeObject(tagName);  
-                   
-                  
+                    let tagIndex = this.model.tags.findIndex(tag => tagName.toLowerCase() === tag.toLowerCase());
+                    this.model.tags.removeAt(tagIndex);
                 }
             },
             /*This action is invoked when key is pressed in Tags Input field.
@@ -319,29 +313,27 @@
                     if(tag.charAt(tag.length-1) == ','){
                         tag = tag.substring(0, tag.length - 1);
                     }
-                    if(tag != "" && tag !="," && this.validateTag(tag)){
+                    if(tag != "" && tag !="," && this.composerComponent.validateTag(tag)){
                         //Initialize Model tags array if not.
                         if(!this.model.get("tags") || this.model.get("tags") == undefined){
                             this.model.set("tags", Ember.A());
                         }
                         
-                        //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
+			//Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
                         //var sagTagObj= this.get('productTags').findBy("tagName", tag);
-			var sagTagObj = this.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
+			var sagTagObj = this.composerComponent.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
 			
                         //If Entered tag is present in sag product tag list then change respective checkbox status to checked.  
                         //And also add tag to Model.
                         if(sagTagObj){
                             Ember.set(sagTagObj,"isChecked", true);    
                             //If Tag is not already seleted 
-                            if(this.model.tags.indexOf(tag) == -1){
-                                
+                            if(this.model.tags.indexOf(tag) == -1){    
                                 //Auto select Parent Tag if child is selected.
-                                this.send('autoSelectParentTag',sagTagObj);
+                                this.composerComponent.send('autoSelectParentTag',sagTagObj);
                                 
                                 //Add tag to model
-                                this.model.tags.pushObject(tag); 
-                                
+                                this.model.tags.pushObject(tag);  
                             }
                         }else{
                             if(this.model.tags.indexOf(tag) == -1){
@@ -350,9 +342,11 @@
                             }
                         }
                     }    
-                    this.set('tagInputValue',''); 
+                    //Clear the tag input field after adding tag.
+                        this.composerComponent.set('tagInputValue','');  
+                        tagInput = document.getElementsByClassName("tag-input");
+                        tagInput[0].value="";
                 }
-                
             },
             /*
             This methods prevent to display character in Tag input filed when key is down(Specially done for <Comma> character)
@@ -366,23 +360,22 @@
                 Purpose: Add tag to "model.tags" array
             */
             addTag(tag){
-                
-                if(tag != "" && tag !="," && this.validateTag(tag)){
+                if(tag != "" && tag !="," && this.composerComponent.validateTag(tag)){
                     if(!this.model.get("tags") || this.model.get("tags") == undefined){
                         this.model.set("tags", Ember.A());
                     }
 
-                    //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
+		    //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
                     //var sagTagObj= this.get('productTags').findBy("tagName", tag);
-		    var sagTagObj = this.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
-
+		    var sagTagObj = this.composerComponent.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
+		    
                     if(sagTagObj){
                         Ember.set(sagTagObj,"isChecked", true);    
                         //If Tag is not already seleted 
                         if(this.model.tags.indexOf(tag) == -1){
                             
                             //Auto select Parent Tag if child is selected.
-                            this.send('autoSelectParentTag',sagTagObj);
+                            this.composerComponent.send('autoSelectParentTag',sagTagObj);
                             
                             //Add tag to model
                             this.model.tags.pushObject(tag); 
@@ -395,49 +388,49 @@
                         }
                     }
                     
-                        this.set('tagInputValue','');     
+                    //Clear the tag input field after adding tag.
+                        this.composerComponent.set('tagInputValue','');  
+                        tagInput = document.getElementsByClassName("tag-input");
+                        tagInput[0].value="";
                 }
                 
             },
             removeTag(tag){
-                
+	    
                 //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
                 //var sagTagObj= this.get('productTags').findBy("tagName", tag);
-		var sagTagObj = this.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
-		
+		var sagTagObj = this.composerComponent.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
                 if(sagTagObj){
                     Ember.set(sagTagObj,"isChecked", false);    
                 }
                 
-                this.model.tags.removeObject(tag); 
+                let tagIndex = this.model.tags.findIndex(t => tag.toLowerCase() === t.toLowerCase());
+                this.model.tags.removeAt(tagIndex);
                 
             },
-            autoSelectParentTag(sagTagObj){
-                //Auto select Parent Tag if child is selected.
-		if(sagTagObj){
-		  if( sagTagObj.productCategory.toLowerCase() !=  sagTagObj.tagName.toLowerCase()){
-                    if(!(this.model.tags.find((tag) => tag.toLowerCase() == sagTagObj.productCategory.toLowerCase()))){
+        autoSelectParentTag(sagTagObj){
+            //Auto select Parent Tag if child is selected.
+		    if(sagTagObj){
+			    if( sagTagObj.productCategory.toLowerCase() !=  sagTagObj.tagName.toLowerCase()){
+                    //if(this.model.tags.indexOf(sagTagObj.productCategory) == -1){
+		            if(!(this.model.tags.find((tag) => tag.toLowerCase() == sagTagObj.productCategory.toLowerCase()))){
                         var parentTagObj= this.get('productTags').findBy("tagName", sagTagObj.productCategory);
                             Ember.set(parentTagObj,"isChecked", true);
                              this.model.tags.pushObject(sagTagObj.productCategory);
-                           
                     }
-                     
-                  }
-		}
-               
-            },
-            deselectAll(){
-                this.get('productTags').forEach((sagTagObject) => {
-                    Ember.set(sagTagObject,"isChecked", false);
-                });
+                 }
+		    }
+        },
+        deselectAll(){
+            this.get('productTags').forEach((sagTagObject) => {
+                Ember.set(sagTagObject,"isChecked", false);
+            });
                 
-            }
-            
-            
         }
+        },
     })
 </script>
+
 <!-- Override File: /app/assets/javascripts/discourse/routes/tags-show.js.es6 -->
 <script type="text/discourse-plugin" version="0.8">
     api.modifyClass('route:tags-show',{
@@ -445,368 +438,56 @@
        actions:{
        	  //Modified createTopic action methods on 22-02-2021 as discourse update createTopic action method.
            createTopic() {
-	      const controller = this.controllerFor("tag.show");
-	      const Composer = require("discourse/models/composer");
-	      const {makeArray} = require("discourse-common/lib/helpers"); //Added by Webdirket on 22-02-2021. As Discourse update this action method.
-	      
-	      if (controller.get("list.draft")) {
-		this.openTopicDraft(controller.get("list"));
-	      } else {
-		const composerController = this.controllerFor("composer");
-		composerController
-		  .open({
-		    categoryId: controller.get("category.id"),
-		    action: Composer.CREATE_TOPIC,
-		    draftKey: controller.get("list.draft_key"),
-		    draftSequence: controller.get("list.draft_sequence"),
-		  })
-		  .then(() => {
-		    // Pre-fill the tags input field
-		    if (composerController.canEditTags && controller.get("model.id")) {
-		      const composerController  = this.controllerFor("composer"); //Added by webdirekt : Get the Composer Controller
-		      const composerModel = this.controllerFor("composer").get("model");
-		      composerModel.set(
-			"tags",
-			[
-			  controller.get("model.id"),
-			  ...makeArray(controller.additionalTags),
-			].filter(Boolean)
-		      );
-		      //Added by webdirekt 
-                      //Deselect All the Select tags checkboxes
-                      composerController.send('deselectAll');
-                      //Update select tags checkboxes based on pre-selected tags.
-                      composerModel.tags.forEach((tag) => {
-		            //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
-                            //var sagTagObj= composerController.get('productTags').findBy("tagName", tag);
-			    var sagTagObj = composerController.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
-                            //If Entered tag is present in sag product tag list then change respective checkbox status to checked.  
-                            if(sagTagObj){
-                                //Updated trhe checkbox status
-                                Ember.set(sagTagObj,"isChecked", true);    
-                                    
-                                //Auto select Parent Tag if child is selected.
-                                composerController.send('autoSelectParentTag',sagTagObj);
-                                    
-                            }
-                        });
-		    }
-		  });
-	      }
-	   }   
+               //Called super class createTopic action to grab the changes in discourse core. [08-04-2021]
+               this._super(...arguments);
+               
+                if (this.get("currentUser.has_topic_draft")) {
+                    this.openTopicDraft();
+                } else {
+                    const Composer = require("discourse/models/composer");
+                    const controller = this.controllerFor("tag.show");
+                    const composerController = this.controllerFor("composer");
+                    const {makeArray} = require("discourse-common/lib/helpers");
+                    
+                    composerController
+                      .open({
+                        categoryId: controller.get("category.id"),
+                        action: Composer.CREATE_TOPIC,
+                        draftKey: Composer.NEW_TOPIC_KEY,
+                      })
+                      .then(() => {
+                        // Pre-fill the tags input field
+                        if (composerController.canEditTags && controller.get("model.id")) {
+                          const composerModel = this.controllerFor("composer").get("model");
+                          composerModel.set(
+                            "tags",
+                            [
+                              controller.get("model.id"),
+                              ...makeArray(controller.additionalTags),
+                            ].filter(Boolean)
+                          );
+                          
+                           //Deselect All the Select tags checkboxes
+                            composerController.send('deselectAll');
+                            //Update select tags checkboxes based on pre-selected tags.
+                            composerModel.tags.forEach((tag) => {
+            		            //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
+                                        //var sagTagObj= composerController.get('productTags').findBy("tagName", tag);
+            			        var sagTagObj = composerController.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
+                                //If Entered tag is present in sag product tag list then change respective checkbox status to checked.  
+                                if(sagTagObj){
+                                    //Updated trhe checkbox status
+                                    Ember.set(sagTagObj,"isChecked", true);    
+                                    //Auto select Parent Tag if child is selected.
+                                    composerController.send('autoSelectParentTag',sagTagObj);    
+                                }
+                            });
+                        }
+      
+                      });
+                }
+                
+	        }   
        }
     });
-</script>
-
-<!-- Override File: /app/assets/javascripts/discourse/templates/composer.hbs -->
-<script type="text/x-handlebars" data-template-name="composer">
-    {{#composer-body composer=model
-                 showPreview=showPreview
-                 openIfDraft=(action "openIfDraft")
-                 typed=(action "typed")
-                 cancelled=(action "cancelled")
-                 save=(action "save")}}
-  <div class="grippie"></div>
-  {{#if visible}}
-      {{composer-messages composer=model
-                          messageCount=messageCount
-                          addLinkLookup=(action "addLinkLookup")}}
-      {{#if model.viewOpenOrFullscreen}}
-        <div class="reply-area {{if canEditTags 'with-tags'}}">
-          <div class='composer-fields'>
-            {{plugin-outlet name="composer-open" args=(hash model=model)}}
-            <div class='reply-to'>
-              {{#unless model.viewFullscreen}}
-                <div class="reply-details">
-                  {{composer-action-title
-                    model=model
-                    openComposer=(action "openComposer")
-                    closeComposer=(action "closeComposer")
-                    canWhisper=canWhisper
-                    tabindex=8}}
-                  {{plugin-outlet name="composer-action-after" noTags=true args=(hash model=model)}}
-
-                  {{#unless site.mobileView}}
-                    {{#if isWhispering}}
-                      <span class='whisper'>{{d-icon "far-eye-slash"}}</span>
-                    {{/if}}
-                    {{#if model.unlistTopic}}
-                      <span class='whisper'>({{i18n 'composer.unlist'}})</span>
-                    {{/if}}
-                    {{#if model.noBump}}
-                      <span class="no-bump">{{d-icon "anchor"}}</span>
-                    {{/if}}
-                  {{/unless}}
-
-                  {{#if canEdit}}
-                    {{#link-to-input onClick=(action "displayEditReason") showInput=showEditReason icon="info-circle" class="display-edit-reason"}}
-                      {{text-field value=editReason tabindex="7" id="edit-reason" maxlength="255" placeholderKey="composer.edit_reason_placeholder"}}
-                    {{/link-to-input}}
-                  {{/if}}
-                </div>
-              {{/unless}}
-              {{composer-toggles composeState=model.composeState
-                        toggleComposer=(action "toggle")
-                        toggleToolbar=(action "toggleToolbar")
-                        toggleFullscreen=(action "fullscreenComposer")}}
-            </div>
-            {{#unless model.viewFullscreen}}
-              {{#if model.canEditTitle}}
-                {{#if model.creatingPrivateMessage}}
-                  <div class='user-selector'>
-                    {{composer-user-selector topicId=topicModel.id
-                                             usernames=model.targetRecipients
-                                             hasGroups=model.hasTargetGroups
-                                             focusTarget=focusTarget
-                                             class="users-input"}}
-                    {{#if showWarning}}
-                      <label class='add-warning'>
-                        {{input type="checkbox" checked=model.isWarning tabindex="3"}}
-                        {{i18n "composer.add_warning"}}
-                      </label>
-                    {{/if}}
-                  </div>
-                {{/if}}
-
-                <div class="title-and-category {{if showPreview 'with-preview'}}">
-
-                  {{composer-title composer=model lastValidatedAt=lastValidatedAt focusTarget=focusTarget}}
-
-                  {{#if model.showCategoryChooser}}
-                    <div class="category-input">
-                      {{category-chooser
-                        value=model.categoryId
-                        tabindex="3"
-                        onChange=(action (mut model.categoryId))
-                        isDisabled=disableCategoryChooser
-                        options=(hash
-                          scopedCategoryId=scopedCategoryId
-                        )
-                      }}
-                      {{popup-input-tip validation=categoryValidation}}
-                    </div>
-                  {{/if}}
-                
-                  {{#if canEditTags}}
-                    {{!--
-                    {{mini-tag-chooser
-                      value=model.tags
-                      tabindex=4
-                      isDisabled=disableTagsChooser
-                      onChange=(action (mut model.tags))
-                      options=(hash
-                        categoryId=model.categoryId
-                        minimum=model.minimumRequiredTags
-                      )
-                    }}
-                  
-                    {{popup-input-tip validation=tagValidation}}
-                     --}}
-                  {{/if}}
-                    
-                </div>
-              {{/if}}
-
-              {{plugin-outlet name="composer-fields" args=(hash model=model)}}
-            {{/unless}}
-
-          </div>
-
-          {{composer-editor topic=topic
-                            composer=model
-                            lastValidatedAt=lastValidatedAt
-                            canWhisper=canWhisper
-                            storeToolbarState=(action "storeToolbarState")
-                            onPopupMenuAction=(action "onPopupMenuAction")
-                            showUploadModal=(route-action "showUploadSelector")
-                            popupMenuOptions=popupMenuOptions
-                            draftStatus=model.draftStatus
-                            isUploading=isUploading
-                            allowUpload=allowUpload
-                            uploadIcon=uploadIcon
-                            isCancellable=isCancellable
-                            uploadProgress=uploadProgress
-                            groupsMentioned=(action "groupsMentioned")
-                            cannotSeeMention=(action "cannotSeeMention")
-                            importQuote=(action "importQuote")
-                            togglePreview=(action "togglePreview")
-                            showToolbar=showToolbar
-                            afterRefresh=(action "afterRefresh")
-                            focusTarget=focusTarget}}
-            
-            <!-- Select tags Section added by Webdirekt -->
-            {{#if canEditTags}}
-                {{#unless model.viewFullscreen}}
-                        <div class="select-tags-section {{if showPreview 'with-preview'}}" tabindex="5">
-                        	<div class="select-tags-header">
-                                <div class="tag-text-area">
-                                    <div class="seleted-tag-area">
-                                        {{#each model.tags as |tag|}}
-                                          <span class="seleted-tag-wrapper">
-                                              {{#d-button
-                                                translatedTitle=tag
-                                                icon="times"
-                                                action=(action "removeTag")
-                                                actionParam=tag
-                                                class="selected-tag"
-                                              }}
-                                                {{discourse-tag tag noHref=true}}
-                                              {{/d-button}}
-                                          </span>
-                                        {{/each}}
-                                    </div>
-                                    <div class="tag-input-area">
-                                    {{input type="text" value=this.tagInputValue key-down=(action "onKeyDown") key-up=(action "addTagByKeyPress") class="tag-input" placeholder="select below or type here…" }}
-                                    </div>
-                                </div>
-                                <div class="add-tag-btn">
-                                    {{#d-button
-                                    translatedTitle="Add Tag"
-                                    action=(action "addTag")
-                                    actionParam=this.tagInputValue
-                                    }}
-                                        + {{#unless site.mobileView}}Add{{/unless}}
-                                    {{/d-button}}
-                                </div>
-                        	</div>
-                        	<div class="select-tags-body">
-                        	    <div class="select-tags-title">
-                        	        <h3>Select Tags</h3>
-                        	    </div>
-                        		<div class="tag-list-section">
-                                		{{#each this.sagProductCategories as |category|}}
-                                		    <div id={{category}} class="select-tag-category">
-                                		        <ul>
-                                				{{#each this.productTags as |tag|}}
-                                				    
-                                				    {{#if (eq category tag.productCategory)}} 
-                                				    <li id="{{tag.tagName}}">
-                                		                <label id="{{tag.tagName}}">{{input type="checkbox" name=tag.tagName change=(action "updateModelTags" value='target' ) checked=tag.isChecked }} 
-                                		                 {{tag.tagName}}</label>
-                                		            </li>   
-                                		            {{/if}}
-                                		            
-                                		        {{/each}}
-                                		        </ul>
-                                			</div>
-                                		{{/each}}
-                        		</div>
-                        	</div>
-                        	
-                        </div>
-                    {{popup-input-tip validation=tagValidation}}
-                {{/unless}}
-            {{/if}}
-            <!-- Select tags Sectoin Ends -->
-                
-          <div class='submit-panel'>
-            {{plugin-outlet name="composer-fields-below" args=(hash model=model)}}
-
-            <div class='save-or-cancel'>
-              {{#unless model.viewFullscreen}}
-                {{composer-save-button action=(action "save")
-                                       icon=saveIcon
-                                       label=saveLabel
-                                       disableSubmit=disableSubmit}}
-
-              {{#if site.mobileView}}
-                <a href {{action "cancel"}} class='cancel' tabindex="6" title="{{i18n 'cancel'}}">
-                  {{#if canEdit}}
-                    {{d-icon "times"}}
-                  {{else}}
-                    {{d-icon "far-trash-alt"}}
-                  {{/if}}
-                </a>
-              {{else}}
-                <a href {{action "cancel"}} class='cancel' tabindex="6" >{{i18n 'cancel'}}</a>
-              {{/if}}
-            {{/unless}}
-
-
-              {{#if site.mobileView}}
-                {{#if whisperOrUnlistTopic}}
-                  <span class='whisper'>
-                    {{d-icon "far-eye-slash"}}
-                  </span>
-                {{/if}}
-                {{#if model.noBump}}
-                  <span class="no-bump">{{d-icon "anchor"}}</span>
-                {{/if}}
-              {{/if}}
-
-
-              {{#if isUploading}}
-                <div id="file-uploading">
-                  {{loading-spinner size="small"}}<span>{{i18n 'upload_selector.uploading'}} {{uploadProgress}}%</span>
-                  {{#if isCancellable}}
-                    <a href id="cancel-file-upload" {{action "cancelUpload"}}>{{d-icon "times"}}</a>
-                  {{/if}}
-                </div>
-              {{/if}}
-              <div id='draft-status' class="{{if isUploading 'hidden'}}">
-                {{#if model.draftSaving}}<div class="spinner small"></div>{{/if}}
-                {{#if model.draftSaved}}{{d-icon 'check' class='save-animation'}}{{/if}}
-                {{#if model.draftStatus}}
-                  <span title="{{model.draftStatus}}">
-                    {{#if model.draftConflictUser}}
-                      {{avatar model.draftConflictUser imageSize="small"}} {{d-icon 'user-edit'}}
-                    {{else}}
-                      {{d-icon 'sync-alt'}}
-                    {{/if}}
-                    {{#unless site.mobileView}}
-                      {{model.draftStatus}}
-                    {{/unless}}
-                  </span>
-                {{/if}}
-              </div>
-            </div>
-
-              {{#if site.mobileView}}
-                {{#if allowUpload}}
-                  <a class="btn btn-default no-text mobile-file-upload {{if isUploading 'hidden'}}">
-                    {{d-icon uploadIcon}}
-                  </a>
-                {{/if}}
-
-                <a href class="btn btn-default no-text mobile-preview" title="{{i18n 'composer.show_preview'}}" {{action "togglePreview"}}>
-                  {{d-icon "desktop"}}
-                </a>
-
-                {{#if showPreview}}
-                  {{d-button action=(action "togglePreview") class="hide-preview" label="composer.hide_preview"}}
-                {{/if}}
-              {{else}}
-                <a href {{action "togglePreview"}} class='toggle-preview'>{{{toggleText}}}</a>
-              {{/if}}
-
-          </div>
-        </div>
-
-      {{else}}
-        <div class='saving-text'>
-          {{#if model.createdPost}}
-            {{i18n 'composer.saved'}} <a class='permalink' href="{{unbound createdPost.url}}" {{action "viewNewReply"}}>{{i18n 'composer.view_new_post'}}</a>
-          {{else}}
-            {{i18n 'composer.saving'}} {{loading-spinner size="small"}}
-          {{/if}}
-        </div>
-
-        <div class='draft-text'>
-          {{#if model.topic}}
-            {{d-icon "share"}} {{{draftTitle}}}
-          {{else}}
-            {{i18n "composer.saved_draft"}}
-          {{/if}}
-        </div>
-
-        {{composer-toggles composeState=model.composeState
-          toggleFullscreen=(action "openIfDraft")
-          toggleComposer=(action "toggle")
-          toggleToolbar=(action "toggleToolbar")}}
-
-      {{/if}}
-
-  {{/if}}
-
-{{/composer-body}}
 </script>
