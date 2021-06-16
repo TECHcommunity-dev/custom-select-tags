@@ -10,8 +10,8 @@
             "Flow-and-Java-Services", "Free-Trial", "AgileApps", 
             "B2B-Integration", "webmethods-io-B2B", "EDI", "Managed-File-Transfer",
             "API-Management", "API-Gateway", "API-Portal", "Microgateway", "AppMesh", "CentraSite", "SOA", 
-            "Command-Central", "BPM", "BAM", "MWS-CAF-Task-Engine", "Terracotta", "Mashzone-NextGen",
-            "Mainframe-Integration", "EntireX", "ApplinX", "CONNX"],
+            "Command-Central", "BPM", "BAM", "MWS-CAF-Task-Engine", "Terracotta",
+            "Mainframe-Integration", "EntireX", "ApplinX", "CONNX", "Mashzone-NextGen"],
 	        "Adabas-Natural": ["Adabas-Natural", "Adabas", "Adabas-on-Mainframes", "Adabas-on-Linux", 
 	        "Natural", "Natural-on-Mainframes", "Natural-on-Linux", "NaturalONE"]
         },
@@ -194,6 +194,13 @@
                         this.model.tags.removeObject(appmesh.tagName);
                         this.model.tags.removeObject(centrasite.tagName);
                         this.model.tags.removeObject(soa.tagName);
+                    }
+		    
+		//auto deselect webmethods tag if Mashzone-NextGen is selected - Mariela     
+                    if(sagTagObj.tagName == "Mashzone-NextGen") {
+                        var webmethodsParent= this.composerComponent.get('productTags').findBy("tagName", "webmethods");
+                        Ember.set(webmethodsParent,"isChecked", false);
+                        this.model.tags.removeObject(webmethodsParent.tagName);
                     }
                     
                 //auto deselect tags if BPM is deselected - Mariela 
