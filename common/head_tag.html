@@ -91,6 +91,13 @@
                     if(this.model.tags.findIndex(item => item.toLowerCase() === sagTagObj.tagName.toLowerCase()) == -1){
                         this.model.tags.pushObject(tagName);       
                     }
+		    
+		    //auto deselect webmethods tag if Mashzone-NextGen is selected - Mariela     
+                    if(sagTagObj.tagName == "Mashzone-NextGen") {
+                        var webmethodsParent= this.composerComponent.get('productTags').findBy("tagName", "webmethods");
+                        Ember.set(webmethodsParent,"isChecked", false);
+                        this.model.tags.removeObject(webmethodsParent.tagName);
+                    }
                     
                     //auto select API-Management tag if api-gateway, api-portal, microgateway, appmesh, centrasite or soa are selected - Mariela     
                     if(sagTagObj.tagName == "API-Gateway" || sagTagObj.tagName == "API-Portal" || sagTagObj.tagName == "Microgateway" ||
@@ -194,13 +201,6 @@
                         this.model.tags.removeObject(appmesh.tagName);
                         this.model.tags.removeObject(centrasite.tagName);
                         this.model.tags.removeObject(soa.tagName);
-                    }
-		    
-		//auto deselect webmethods tag if Mashzone-NextGen is selected - Mariela     
-                    if(sagTagObj.tagName == "Mashzone-NextGen") {
-                        var webmethodsParent= this.composerComponent.get('productTags').findBy("tagName", "webmethods");
-                        Ember.set(webmethodsParent,"isChecked", false);
-                        this.model.tags.removeObject(webmethodsParent.tagName);
                     }
                     
                 //auto deselect tags if BPM is deselected - Mariela 
