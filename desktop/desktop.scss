@@ -185,19 +185,22 @@
 }
 
 //Style to have category drop-down filed next to new topic title field [Added by: Saurabh; Date: 29/06/2021]
-#reply-control .with-tags .title-input{
+#reply-control .with-tags .title-input {
     flex: 1 1 60% !important;
 }
-#reply-control .with-tags .category-input{
+#reply-control .with-tags .category-input {
     margin-left: 5px;
     flex: auto;
     @include breakpoint("tablet") {
         margin-left: 0px;
     }
 }
-.d-editor-preview-wrapper{
+.d-editor-preview-wrapper {
     margin-left: 6px !important;
 }
 #reply-control.edit-title .with-tags .d-editor-preview-wrapper {
     margin-top: -30px !important;
+}
+.fullscreen-composer #reply-control.fullscreen .d-editor-preview-wrapper {
+    margin-top: 0px !important;
 }
