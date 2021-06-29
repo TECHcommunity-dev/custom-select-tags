@@ -8,8 +8,10 @@
     }
 }
 
-#reply-control .wmd-controls{
-    min-height: 150px;
+//Modified to increase the height og the composer editor [Added by: Saurabh; Date: 29/06/2021]
+#reply-control .with-tags .wmd-controls{
+    max-height: 42vh !important;
+    min-height: 200px !important;
 }
 
 #reply-control.fullscreen .wmd-controls{
@@ -180,4 +182,22 @@
     margin-right: 5px;
     margin-top: 1px;
     margin-bottom: 3px; //Added by Webdirket to solve the BAM tag checkbox issue  on 22-02-2021
+}
+
+//Style to have category drop-down filed next to new topic title field [Added by: Saurabh; Date: 29/06/2021]
+#reply-control .with-tags .title-input{
+    flex: 1 1 60% !important;
+}
+#reply-control .with-tags .category-input{
+    margin-left: 5px;
+    flex: auto;
+    @include breakpoint("tablet") {
+        margin-left: 0px;
+    }
+}
+.d-editor-preview-wrapper{
+    margin-left: 6px !important;
+}
+#reply-control.edit-title .with-tags .d-editor-preview-wrapper {
+    margin-top: -30px !important;
 }
