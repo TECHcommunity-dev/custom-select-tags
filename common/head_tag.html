@@ -25,24 +25,6 @@
                 : this.keyValueStore.get("composer.showPreview") || "true";
             this.set("showPreview", val === "true");
             
-            //Getting Product Tags from JSON file [Note: currently Ajax call is not in use]
-                var jsonData;
-                //Set Ajax global async property to false to load "sag-product-tags.json" file data before rendering template
-                $.ajaxSetup({async: false});
-                /*
-                $.getJSON('/sag-product-tags.json', function(data){
-                    console.log(data);
-                    jsonData =  data;
-                });
-                */
-                //Set Ajax global async property to true [Reset the value as we set it to false before loading JSON data]
-                 $.ajaxSetup({async: true});
-             
-            	//Setting JSON data to sagProductTags property
-                if(jsonData){
-                    this.set('sagProductTags', jsonData);    
-                }
-            
             //Getting Keys (Product categories list) from sagProductTags object.
             var productCategories = Object.keys(this.get('sagProductTags'));
             //Setting Product Categories to Controller property
