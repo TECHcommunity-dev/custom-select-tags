@@ -1,3 +1,5 @@
+//custom-select-tags - mobile.scss
+
 #reply-control .with-tags .category-input{
     margin-right: 0px;
 }
@@ -21,11 +23,6 @@
     display: flex
 }
 
-
-/*.select-tags-section .select-tags-header .seleted-tag-area{
-    overflow-y: scroll;
-}*/
-
 .select-tags-section .seleted-tag-wrapper .btn:hover .d-icon{
     color: red;
 }
@@ -35,7 +32,7 @@
 }
 
 .select-tags-section .seleted-tag-wrapper .discourse-tag.bullet::before{
-    background: #fff;
+    background: var(--secondary); //Replaced hexadecimal color code "#ffffff" with the color variable
     content: none;
 }
 
@@ -51,16 +48,16 @@
 }
 
 .select-tags-section .select-tags-header .tag-text-area{
-    border: 1px solid #919191;
+    border: 1px solid var(--primary-medium); //Replaced hexadecimal color code "#919191" with the color variable
     padding: 0px;
     color: black;
     min-height: 32px;
 //    max-height: 62px;
-    flex: 1 1 100%;;
+    flex: 1 1 100%;
 }
 
 .select-tags-section .select-tags-header .tag-text-area .selected-tag{
-    border: 1px solid #919191;
+    border: 1px solid var(--primary-medium); //Replaced hexadecimal color code "#919191" with the color variable
     background: #08c;
     margin: 1px;
     padding: 0px;
@@ -69,19 +66,14 @@
 .select-tags-section .select-tags-header .tag-text-area .selected-tag:hover{
     background: #08c;
 }
-/*.select-tags-section .select-tags-header .tag-text-area .seleted-tag-area{
-    overflow-y: scroll;
-    max-height: 33px;    
-}*/
-
 
 .select-tags-section .select-tags-header .tag-text-area .selected-tag .discourse-tag{
-    color: #fff !important;
+    color: var(--secondary) !important; //Replaced hexadecimal color code "#ffffff" with the color variable
 }
 
 .select-tags-section .select-tags-header .add-tag-btn .btn {
     color: #08c;
-    background-color: #fff;
+    background-color: var(--secondary); //Replaced hexadecimal color code "#ffffff" with the color variable
     font-weight: bold;
     border: 1px solid #08c;
     min-height: 32px;
@@ -91,7 +83,7 @@
 }
 
 .select-tags-section .select-tags-header .add-tag-btn .btn:hover {
-    color: #fff;
+    color: var(--secondary); //Replaced hexadecimal color code "#ffffff" with the color variable
     background-color: #08c;
 }
 
@@ -126,8 +118,3 @@
 .select-tags-section .select-tags-body .tag-list-section ul li:first-child {
     font-weight: bold;
 }
-
-
-
-
-
