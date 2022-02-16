@@ -5,3 +5,28 @@
         display: none;
     }
 }
+
+// ------ CSS Moved From The "my component - common.scss" [Date: 15-02-2022] ------------
+//Fix the selected tags styles
+.select-tags-section .select-tags-header .tag-text-area .selected-tag {
+    padding: 0px;
+}
+.select-tags-section .select-tags-header .tag-text-area .selected-tag .discourse-tag.box {
+    background-color: transparent;
+}
+//Modify the + Addbutton 
+.select-tags-section .select-tags-header .add-tag-btn .btn {
+    color: #91b6c8 !important;
+    height: 61px;   
+}
+
+.select-tags-body .tag-list-section li#IoT, .select-tags-body .tag-list-section li#API-Management, 
+.select-tags-body .tag-list-section li#Mainframe-Integration {
+    display: none;
+} 
+
+.select-tags-body .tag-list-section #Cumulocity-IoT, .select-tags-body .tag-list-section #TrendMiner, 
+.select-tags-body .tag-list-section #Streaming-Analytics-Apama {
+    font-weight: bold !important;
+}
+// ------ End of CSS Moved From The "my component" ------------
