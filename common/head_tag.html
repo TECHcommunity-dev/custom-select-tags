@@ -5,7 +5,7 @@
         sagProductTags: {
             "IoT": ["IoT", "Cumulocity-IoT", "IoT-Device-Connectivity", "IoT-Data-Analytics", "IoT-Edge", "IoT-Solution-Accelerators", 
             "IoT-Platform", "TrendMiner", "Streaming-Analytics-Apama"],
-            "webmethods": ["webmethods", "Integration-and-ESB", "webMethods-io-Integration", "Adapters-and-E-Standards", 
+            "webmethods": ["webmethods", "Integration-server-and-ESB", "webMethods-io-Integration", "Adapters-and-E-Standards", 
             "Universal-Messaging-Broker", "Application-Platform", "Service-Designer", "Cloud-Container", "CloudStreams",
             "Flow-and-Java-Services", "Free-Trial", "AgileApps", 
             "B2B-Integration", "webmethods-io-B2B", "EDI", "Managed-File-Transfer",
@@ -148,11 +148,11 @@
                             }
                     }
                     
-                    //auto select Integration-and-ESB if webMethods-io-Integration, Adapters-and-E-Standards, Service-Designer, Cloud-Container, CloudStreams, Flow-and-Java-Services or Free-Trial are selected - Mariela
-                    if(sagTagObj.tagName == "webMethods-io-Integration" || sagTagObj.tagName == "Adapters-and-E-Standards" ||
+                    //auto select Integration-server-and-ESB if Adapters-and-E-Standards, Service-Designer, Cloud-Container, CloudStreams, Flow-and-Java-Services or Free-Trial are selected - Mariela
+                    if(sagTagObj.tagName == "Adapters-and-E-Standards" ||
                     sagTagObj.tagName == "Service-Designer"  || sagTagObj.tagName == "Cloud-Container" || sagTagObj.tagName == "CloudStreams"
                     || sagTagObj.tagName == "Flow-and-Java-Services" || sagTagObj.tagName == "Free-Trial") {
-                        var esb = this.composerComponent.get('productTags').findBy("tagName", "Integration-and-ESB");
+                        var esb = this.composerComponent.get('productTags').findBy("tagName", "Integration-server-and-ESB");
                             if(this.model.tags.indexOf(esb.tagName) == -1) {
                                 Ember.set(esb,"isChecked", true);
                                 this.model.tags.pushObject(esb.tagName);
@@ -262,23 +262,20 @@
                         this.model.tags.removeObject(iot_platform.tagName);
                     }
                     
-                    //auto deselect tags if Integration-and-ESB is deselected - Mariela 
-                    if(sagTagObj.tagName == "Integration-and-ESB") {
-                        var webmethods_io_integration = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-Integration");
+                    //auto deselect tags if Integration-server-and-ESB is deselected - Mariela 
+                    if(sagTagObj.tagName == "Integration-server-and-ESB") {
                         var adapters_e_standarts = this.composerComponent.get('productTags').findBy("tagName", "Adapters-and-E-Standards");
                         var service_designer = this.composerComponent.get('productTags').findBy("tagName", "Service-Designer");
                         var cloud_container = this.composerComponent.get('productTags').findBy("tagName", "Cloud-Container");
                         var cloudstreams = this.composerComponent.get('productTags').findBy("tagName", "CloudStreams");
                         var flow_java_services = this.composerComponent.get('productTags').findBy("tagName", "Flow-and-Java-Services");
                         var free_trial = this.composerComponent.get('productTags').findBy("tagName", "Free-Trial");
-                        Ember.set(webmethods_io_integration,"isChecked", false);
                         Ember.set(adapters_e_standarts,"isChecked", false);
                         Ember.set(service_designer,"isChecked", false);
                         Ember.set(cloud_container,"isChecked", false);
                         Ember.set(cloudstreams,"isChecked", false);
                         Ember.set(flow_java_services,"isChecked", false);
                         Ember.set(free_trial,"isChecked", false);
-                        this.model.tags.removeObject(webmethods_io_integration.tagName);
                         this.model.tags.removeObject(adapters_e_standarts.tagName);
                         this.model.tags.removeObject(service_designer.tagName);
                         this.model.tags.removeObject(cloud_container.tagName);
