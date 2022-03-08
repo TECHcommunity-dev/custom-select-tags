@@ -191,7 +191,7 @@
                     if(sagTagObj.tagName == "webMethods-io-Integration") {
                         var webMethodsCloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
                             if(this.model.tags.indexOf(webMethodsCloud.tagName) == -1) {
-                                Ember.set(wwebMethodsCloud,"isChecked", true);
+                                Ember.set(webMethodsCloud,"isChecked", true);
                                 this.model.tags.pushObject(webMethodsCloud.tagName);
                             }
                     }
@@ -322,18 +322,20 @@
                         this.model.tags.removeObject(free_trial.tagName);
                     }
 		    
-		    //auto deselect tags if webMethods-cloud is deselected - Mariela 
+		      //auto deselect tags if webMethods-cloud is deselected - Mariela 
                     if(sagTagObj.tagName == "webMethods-cloud") {
-		    	var CloudContainer = this.composerComponent.get('productTags').findBy("tagName", "Cloud-Container");
-                        var webMethods_io_Integration = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-Integration");
-                        var webMethods_ioB2B = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-B2B");
-			Ember.set(CloudContainer,"isChecked", false);
-                        Ember.set(webMethods_io_Integration,"isChecked", false);
-                        Ember.set(webMethods_ioB2B,"isChecked", false);
-			this.model.tags.removeObject(CloudContainer.tagName);
-                        this.model.tags.removeObject(webMethods_io_Integration.tagName);
-                        this.model.tags.removeObject(webMethods_ioB2B.tagName);
+                        var cloudContainer = this.composerComponent.get('productTags').findBy("tagName", "Cloud-Container");
+                        var webMethodsioInt = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-Integration");
+                        var webMethodsioB2B = this.composerComponent.get('productTags').findBy("tagName", "webmethods-io-B2B");
+                        Ember.set(cloudContainer,"isChecked", false);
+                        Ember.set(webMethodsioInt,"isChecked", false);
+                        Ember.set(webMethodsioB2B,"isChecked", false);
+                        this.model.tags.removeObject(cloudContainer.tagName);
+                        this.model.tags.removeObject(webMethodsioInt.tagName);
+                        this.model.tags.removeObject(webMethodsioB2B.tagName);                      
                     }
+		    
+		 
                     
                     Ember.set(sagTagObj,"isChecked", false);
                     let tagIndex = this.model.tags.findIndex(tag => tagName.toLowerCase() === tag.toLowerCase());
