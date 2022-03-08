@@ -299,13 +299,13 @@
                     if(sagTagObj.tagName == "webMethods-cloud") {
 		    	var Cloud_Container = this.composerComponent.get('productTags').findBy("tagName", "Cloud-Container");
                         var webMethods_io_Integration = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-Integration");
-                        var webMethods_io_B2B = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-B2B");
+                        var webMethods_ioB2B = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-B2B");
 			Ember.set(Cloud_Container,"isChecked", false);
                         Ember.set(webMethods_io_Integration,"isChecked", false);
-                        Ember.set(webMethods_io_B2B,"isChecked", false);
+                        Ember.set(webMethods_ioB2B,"isChecked", false);
 			this.model.tags.removeObject(Cloud_Container.tagName);
                         this.model.tags.removeObject(webMethods_io_Integration.tagName);
-                        this.model.tags.removeObject(webMethods_io_B2B.tagName);
+                        this.model.tags.removeObject(webMethods_ioB2B.tagName);
                     }
                     
                     Ember.set(sagTagObj,"isChecked", false);
