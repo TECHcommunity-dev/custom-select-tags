@@ -297,13 +297,13 @@
 		    
 		    //auto deselect tags if webMethods-cloud is deselected - Mariela 
                     if(sagTagObj.tagName == "webMethods-cloud") {
-		    	var Cloud_Container = this.composerComponent.get('productTags').findBy("tagName", "Cloud-Container");
+		    	var CloudContainer = this.composerComponent.get('productTags').findBy("tagName", "Cloud-Container");
                         var webMethods_io_Integration = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-Integration");
                         var webMethods_ioB2B = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-B2B");
-			Ember.set(Cloud_Container,"isChecked", false);
+			Ember.set(CloudContainer,"isChecked", false);
                         Ember.set(webMethods_io_Integration,"isChecked", false);
                         Ember.set(webMethods_ioB2B,"isChecked", false);
-			this.model.tags.removeObject(Cloud_Container.tagName);
+			this.model.tags.removeObject(CloudContainer.tagName);
                         this.model.tags.removeObject(webMethods_io_Integration.tagName);
                         this.model.tags.removeObject(webMethods_ioB2B.tagName);
                     }
