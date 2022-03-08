@@ -11,7 +11,7 @@
             "B2B-Integration", "webmethods-io-B2B", "EDI", "Managed-File-Transfer",
             "API-Management", "API-Gateway", "API-Portal", "Microgateway", "AppMesh", "CentraSite", "SOA", 
             "Command-Central", "BPM", "BAM", "MWS-CAF-Task-Engine", "Terracotta",
-            "Mainframe-Integration", "EntireX", "ApplinX", "CONNX", "Mashzone-NextGen"],
+            "Mainframe-Integration", "EntireX", "ApplinX", "CONNX", "Mashzone-NextGen", "webMethods-cloud"],
 	        "Adabas-Natural": ["Adabas-Natural", "Adabas", "Adabas-on-Mainframes", "Adabas-on-Linux", 
 	        "Natural", "Natural-on-Mainframes", "Natural-on-Linux", "NaturalONE"]
         },
@@ -158,10 +158,21 @@
                                 this.model.tags.pushObject(esb.tagName);
                             }
                     }
+		    
+		    //auto select webMethods-cloud if Cloud-Container, webMethods-io-Integration or webMethods-io-B2B are selected - Mariela
+                    if(sagTagObj.tagName == "Cloud-Container" || sagTagObj.tagName == "webMethods-io-Integration" ||
+                    sagTagObj.tagName == "webmethods-io-B2B") {
+                        var webMethods_cloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
+                            if(this.model.tags.indexOf(webMethods_cloud.tagName) == -1) {
+                                Ember.set(webMethods_cloud,"isChecked", true);
+                                this.model.tags.pushObject(webMethods_cloud.tagName);
+                            }
+                    }
+		    
                 }
                 else{ //Else remove tagName to "model.tags" array.
                 
-                Ember.set(sagTagObj,"isChecked", false);
+                Ember.set(sagTagObj,"isChecked", false);				
                 
                 //auto deselect api-gateway and api-portal if API-Management is deselected - Mariela 
                     if(sagTagObj.tagName == "API-Management") {
@@ -282,6 +293,19 @@
                         this.model.tags.removeObject(cloudstreams.tagName);
                         this.model.tags.removeObject(flow_java_services.tagName);
                         this.model.tags.removeObject(free_trial.tagName);
+                    }
+		    
+		    //auto deselect tags if webMethods-cloud is deselected - Mariela 
+                    if(sagTagObj.tagName == "webMethods-cloud") {
+		    	var Cloud-Container = this.composerComponent.get('productTags').findBy("tagName", "Cloud-Container");
+                        var webMethods-io-Integration = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-Integration");
+                        var webMethods-io-B2B = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-B2B");
+			Ember.set(Cloud-Container,"isChecked", false);
+                        Ember.set(webMethods-io-Integration,"isChecked", false);
+                        Ember.set(webMethods-io-B2B,"isChecked", false);
+			this.model.tags.removeObject(Cloud-Container.tagName);
+                        this.model.tags.removeObject(webMethods-io-Integration.tagName);
+                        this.model.tags.removeObject(webMethods-io-B2B.tagName);
                     }
                     
                     Ember.set(sagTagObj,"isChecked", false);
