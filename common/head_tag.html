@@ -109,8 +109,8 @@
                             }
                     }
                     
-                    //auto select b2b_integration if webmethods.io b2b, edi or managed file transfer are selected- Mariela
-                    if(sagTagObj.tagName == "webmethods-io-B2B" || sagTagObj.tagName == "EDI" || 
+                    //auto select b2b_integration if edi or managed file transfer are selected- Mariela
+                    if(sagTagObj.tagName == "EDI" || 
                     sagTagObj.tagName == "Managed-File-Transfer") {
                         var b2b_integration = this.composerComponent.get('productTags').findBy("tagName", "B2B-Integration");
                             if(this.model.tags.indexOf(b2b_integration.tagName) == -1) {
@@ -159,7 +159,7 @@
                             }
                     }
 		    
-		    //auto select Integration-Server-and-ESB if Adapters-and-E-Standards, Service-Designer, Cloud-Container, CloudStreams, Flow-and-Java-Services or Free-Trial are selected - Mariela
+		    //auto select Integration-Server-and-ESB and webMethods-cloud if Cloud-Container is selected - Mariela
                     if(sagTagObj.tagName == "Cloud-Container") {
                         var esbInt = this.composerComponent.get('productTags').findBy("tagName", "Integration-Server-and-ESB");
                             if(this.model.tags.indexOf(esbInt.tagName) == -1) {
@@ -173,9 +173,22 @@
                             }
                     }
 		    
-		    //auto select webMethods-cloud if Cloud-Container, webMethods-io-Integration or webMethods-io-B2B are selected - Mariela
-                    if(sagTagObj.tagName == "webMethods-io-Integration" ||
-                    sagTagObj.tagName == "webmethods-io-B2B") {
+		    //auto select B2B-Integration and webMethods-cloud if webmethods-io-B2B is selected - Mariela
+                    if(sagTagObj.tagName == "webmethods-io-B2B") {
+                        var b2bInt = this.composerComponent.get('productTags').findBy("tagName", "B2B-Integration");
+                            if(this.model.tags.indexOf(b2bInt.tagName) == -1) {
+                                Ember.set(b2bInt,"isChecked", true);
+                                this.model.tags.pushObject(b2bInt.tagName);
+                            }
+			 var webMcloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
+                            if(this.model.tags.indexOf(webMcloud.tagName) == -1) {
+                                Ember.set(webMcloud,"isChecked", true);
+                                this.model.tags.pushObject(webMcloud.tagName);
+                            }
+                    }
+		    
+		    //auto select webMethods-cloud if webMethods-io-Integration is selected - Mariela
+                    if(sagTagObj.tagName == "webMethods-io-Integration") {
                         var webMethodsCloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
                             if(this.model.tags.indexOf(webMethodsCloud.tagName) == -1) {
                                 Ember.set(wwebMethodsCloud,"isChecked", true);
