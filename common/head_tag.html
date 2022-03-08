@@ -162,10 +162,10 @@
 		    //auto select webMethods-cloud if Cloud-Container, webMethods-io-Integration or webMethods-io-B2B are selected - Mariela
                     if(sagTagObj.tagName == "Cloud-Container" || sagTagObj.tagName == "webMethods-io-Integration" ||
                     sagTagObj.tagName == "webmethods-io-B2B") {
-                        var webMethods_cloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
-                            if(this.model.tags.indexOf(webMethods_cloud.tagName) == -1) {
-                                Ember.set(webMethods_cloud,"isChecked", true);
-                                this.model.tags.pushObject(webMethods_cloud.tagName);
+                        var webMethodsCloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
+                            if(this.model.tags.indexOf(webMethodsCloud.tagName) == -1) {
+                                Ember.set(wwebMethodsCloud,"isChecked", true);
+                                this.model.tags.pushObject(webMethodsCloud.tagName);
                             }
                     }
 		    
