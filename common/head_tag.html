@@ -150,7 +150,7 @@
                     
                     //auto select Integration-Server-and-ESB if Adapters-and-E-Standards, Service-Designer, Cloud-Container, CloudStreams, Flow-and-Java-Services or Free-Trial are selected - Mariela
                     if(sagTagObj.tagName == "Adapters-and-E-Standards" ||
-                    sagTagObj.tagName == "Service-Designer"  || sagTagObj.tagName == "Cloud-Container" || sagTagObj.tagName == "CloudStreams"
+                    sagTagObj.tagName == "Service-Designer" || sagTagObj.tagName == "CloudStreams"
                     || sagTagObj.tagName == "Flow-and-Java-Services" || sagTagObj.tagName == "Free-Trial") {
                         var esb = this.composerComponent.get('productTags').findBy("tagName", "Integration-Server-and-ESB");
                             if(this.model.tags.indexOf(esb.tagName) == -1) {
@@ -159,8 +159,22 @@
                             }
                     }
 		    
+		    //auto select Integration-Server-and-ESB if Adapters-and-E-Standards, Service-Designer, Cloud-Container, CloudStreams, Flow-and-Java-Services or Free-Trial are selected - Mariela
+                    if(sagTagObj.tagName == "Cloud-Container") {
+                        var esbInt = this.composerComponent.get('productTags').findBy("tagName", "Integration-Server-and-ESB");
+                            if(this.model.tags.indexOf(esbInt.tagName) == -1) {
+                                Ember.set(esbInt,"isChecked", true);
+                                this.model.tags.pushObject(esbInt.tagName);
+                            }
+			 var webcloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
+                            if(this.model.tags.indexOf(webcloud.tagName) == -1) {
+                                Ember.set(webcloud,"isChecked", true);
+                                this.model.tags.pushObject(webcloud.tagName);
+                            }
+                    }
+		    
 		    //auto select webMethods-cloud if Cloud-Container, webMethods-io-Integration or webMethods-io-B2B are selected - Mariela
-                    if(sagTagObj.tagName == "Cloud-Container" || sagTagObj.tagName == "webMethods-io-Integration" ||
+                    if(sagTagObj.tagName == "webMethods-io-Integration" ||
                     sagTagObj.tagName == "webmethods-io-B2B") {
                         var webMethodsCloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
                             if(this.model.tags.indexOf(webMethodsCloud.tagName) == -1) {
