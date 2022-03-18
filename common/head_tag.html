@@ -7,11 +7,11 @@
             "IoT-Platform", "TrendMiner", "Streaming-Analytics-Apama"],
             "webmethods": ["webmethods", "Integration-Server-and-ESB", "webMethods-io-Integration", "Adapters-and-E-Standards", 
             "Universal-Messaging-Broker", "Application-Platform", "Service-Designer", "Cloud-Container", "CloudStreams",
-            "Flow-and-Java-Services", "Free-Trial", "AgileApps", 
+            "Flow-and-Java-Services", "AgileApps", 
             "B2B-Integration", "webmethods-io-B2B", "EDI", "Managed-File-Transfer",
-            "API-Management", "API-Gateway", "API-Portal", "Microgateway", "AppMesh", "CentraSite", "SOA", 
+            "API-Management", "API-Gateway", "API-Portal", "AppMesh", "CentraSite", 
             "Command-Central", "BPM", "BAM", "MWS-CAF-Task-Engine", "Terracotta",
-            "Mainframe-Integration", "EntireX", "ApplinX", "CONNX", "Mashzone-NextGen", "webMethods-cloud"],
+            "Mainframe-Integration", "EntireX", "ApplinX", "CONNX", "webMethods-cloud"],
 	        "Adabas-Natural": ["Adabas-Natural", "Adabas", "Adabas-on-Mainframes", "Adabas-on-Linux", 
 	        "Natural", "Natural-on-Mainframes", "Natural-on-Linux", "NaturalONE"]
         },
@@ -73,17 +73,10 @@
                     if(this.model.tags.findIndex(item => item.toLowerCase() === sagTagObj.tagName.toLowerCase()) == -1){
                         this.model.tags.pushObject(tagName);       
                     }
-		    
-		    //auto deselect webmethods tag if Mashzone-NextGen is selected - Mariela     
-                    if(sagTagObj.tagName == "Mashzone-NextGen") {
-                        var webmethodsParent= this.composerComponent.get('productTags').findBy("tagName", "webmethods");
-                        Ember.set(webmethodsParent,"isChecked", false);
-                        this.model.tags.removeObject(webmethodsParent.tagName);
-                    }
                     
-                    //auto select API-Management tag if api-gateway, api-portal, microgateway, appmesh, centrasite or soa are selected - Mariela     
-                    if(sagTagObj.tagName == "API-Gateway" || sagTagObj.tagName == "API-Portal" || sagTagObj.tagName == "Microgateway" ||
-                    sagTagObj.tagName == "AppMesh" || sagTagObj.tagName == "CentraSite" || sagTagObj.tagName == "SOA") {
+                    //auto select API-Management tag if api-gateway, api-portal, appmesh, centrasite are selected - Mariela     
+                    if(sagTagObj.tagName == "API-Gateway" || sagTagObj.tagName == "API-Portal" ||
+                    sagTagObj.tagName == "AppMesh" || sagTagObj.tagName == "CentraSite") {
                         var api_management= this.composerComponent.get('productTags').findBy("tagName", "API-Management");
                             if(this.model.tags.indexOf(api_management.tagName) == -1) {
                                 Ember.set(api_management,"isChecked", true);
@@ -148,10 +141,10 @@
                             }
                     }
                     
-                    //auto select Integration-Server-and-ESB if Adapters-and-E-Standards, Service-Designer, Cloud-Container, CloudStreams, Flow-and-Java-Services or Free-Trial are selected - Mariela
+                    //auto select Integration-Server-and-ESB if Adapters-and-E-Standards, Service-Designer, Cloud-Container, CloudStreams, Flow-and-Java-Services are selected - Mariela
                     if(sagTagObj.tagName == "Adapters-and-E-Standards" ||
                     sagTagObj.tagName == "Service-Designer" || sagTagObj.tagName == "CloudStreams"
-                    || sagTagObj.tagName == "Flow-and-Java-Services" || sagTagObj.tagName == "Free-Trial") {
+                    || sagTagObj.tagName == "Flow-and-Java-Services") {
                         var esb = this.composerComponent.get('productTags').findBy("tagName", "Integration-Server-and-ESB");
                             if(this.model.tags.indexOf(esb.tagName) == -1) {
                                 Ember.set(esb,"isChecked", true);
@@ -205,22 +198,16 @@
                     if(sagTagObj.tagName == "API-Management") {
                         var api_gateway = this.composerComponent.get('productTags').findBy("tagName", "API-Gateway");
                         var api_portal = this.composerComponent.get('productTags').findBy("tagName", "API-Portal");
-                        var microgateway = this.composerComponent.get('productTags').findBy("tagName", "Microgateway");
                         var appmesh = this.composerComponent.get('productTags').findBy("tagName", "AppMesh");
                         var centrasite = this.composerComponent.get('productTags').findBy("tagName", "CentraSite");
-                        var soa = this.composerComponent.get('productTags').findBy("tagName", "SOA");
                         Ember.set(api_gateway,"isChecked", false);
                         Ember.set(api_portal,"isChecked", false);
-                        Ember.set(microgateway,"isChecked", false);
                         Ember.set(appmesh,"isChecked", false);
                         Ember.set(centrasite,"isChecked", false);
-                        Ember.set(soa,"isChecked", false);
                         this.model.tags.removeObject(api_gateway.tagName);
                         this.model.tags.removeObject(api_portal.tagName);
-                        this.model.tags.removeObject(microgateway.tagName);
                         this.model.tags.removeObject(appmesh.tagName);
                         this.model.tags.removeObject(centrasite.tagName);
-                        this.model.tags.removeObject(soa.tagName);
                     }
                     
                 //auto deselect tags if BPM is deselected - Mariela 
@@ -307,19 +294,16 @@
                         var cloud_container = this.composerComponent.get('productTags').findBy("tagName", "Cloud-Container");
                         var cloudstreams = this.composerComponent.get('productTags').findBy("tagName", "CloudStreams");
                         var flow_java_services = this.composerComponent.get('productTags').findBy("tagName", "Flow-and-Java-Services");
-                        var free_trial = this.composerComponent.get('productTags').findBy("tagName", "Free-Trial");
                         Ember.set(adapters_e_standarts,"isChecked", false);
                         Ember.set(service_designer,"isChecked", false);
                         Ember.set(cloud_container,"isChecked", false);
                         Ember.set(cloudstreams,"isChecked", false);
                         Ember.set(flow_java_services,"isChecked", false);
-                        Ember.set(free_trial,"isChecked", false);
                         this.model.tags.removeObject(adapters_e_standarts.tagName);
                         this.model.tags.removeObject(service_designer.tagName);
                         this.model.tags.removeObject(cloud_container.tagName);
                         this.model.tags.removeObject(cloudstreams.tagName);
                         this.model.tags.removeObject(flow_java_services.tagName);
-                        this.model.tags.removeObject(free_trial.tagName);
                     }
 		    
 		      //auto deselect tags if webMethods-cloud is deselected - Mariela 
