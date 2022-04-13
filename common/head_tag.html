@@ -9,7 +9,7 @@
             "Universal-Messaging-Broker", "Application-Platform", "Service-Designer", "Cloud-Container", "CloudStreams",
             "Flow-and-Java-Services", "AgileApps", 
             "B2B-Integration", "webmethods-io-B2B", "EDI", "Managed-File-Transfer",
-            "API-Management", "API-Gateway", "Developer-Portal", "API-Portal", "AppMesh", "CentraSite", 
+            "API-Management", "API-Gateway", "API-Portal", "AppMesh", "CentraSite", 
             "Command-Central", "BPM", "BAM", "MWS-CAF-Task-Engine", "Terracotta",
             "Mainframe-Integration", "EntireX", "ApplinX", "CONNX", "webMethods-cloud"],
 	        "Adabas-Natural": ["Adabas-Natural", "Adabas", "Adabas-on-Mainframes", "Adabas-on-Linux", 
@@ -74,9 +74,9 @@
                         this.model.tags.pushObject(tagName);       
                     }
                     
-                    //auto select API-Management tag if api-gateway, api-portal, appmesh, centrasite, developer-portal are selected - Mariela     
+                    //auto select API-Management tag if api-gateway, api-portal, appmesh, centrasite are selected - Mariela     
                     if(sagTagObj.tagName == "API-Gateway" || sagTagObj.tagName == "API-Portal" ||
-                    sagTagObj.tagName == "AppMesh" || sagTagObj.tagName == "CentraSite" || sagTagObj.tagName == "Developer-Portal") {
+                    sagTagObj.tagName == "AppMesh" || sagTagObj.tagName == "CentraSite") {
                         var api_management= this.composerComponent.get('productTags').findBy("tagName", "API-Management");
                             if(this.model.tags.indexOf(api_management.tagName) == -1) {
                                 Ember.set(api_management,"isChecked", true);
@@ -200,17 +200,14 @@
                         var api_portal = this.composerComponent.get('productTags').findBy("tagName", "API-Portal");
                         var appmesh = this.composerComponent.get('productTags').findBy("tagName", "AppMesh");
                         var centrasite = this.composerComponent.get('productTags').findBy("tagName", "CentraSite");
-			var developer_portal = this.composerComponent.get('productTags').findBy("tagName", "Developer-Portal");
                         Ember.set(api_gateway,"isChecked", false);
                         Ember.set(api_portal,"isChecked", false);
                         Ember.set(appmesh,"isChecked", false);
                         Ember.set(centrasite,"isChecked", false);
-			Ember.set(developer_portal,"isChecked", false);
                         this.model.tags.removeObject(api_gateway.tagName);
                         this.model.tags.removeObject(api_portal.tagName);
                         this.model.tags.removeObject(appmesh.tagName);
                         this.model.tags.removeObject(centrasite.tagName);
-			this.model.tags.removeObject(developer_portal.tagName);
                     }
                     
                 //auto deselect tags if BPM is deselected - Mariela 

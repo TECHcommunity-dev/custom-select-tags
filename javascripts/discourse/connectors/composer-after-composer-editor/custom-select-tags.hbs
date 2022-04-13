@@ -34,29 +34,31 @@
                     {{/d-button}}
                 </div>
             </div>
-            <div class="select-tags-body">
-                <div class="select-tags-title">
-                    <h3>Select Tags</h3>
+            {{#if site.mobileView}}
+                <div class="select-tags-body">
+                    <div class="select-tags-title">
+                        <h3>Select Tags</h3>
+                    </div>
+                    <div class="tag-list-section">
+                        {{#each composerComponent.sagProductCategories as |category|}}
+                            <div id={{category}} class="select-tag-category">
+                                <ul>
+                                    {{#each composerComponent.productTags as |tag|}}
+                                        {{#if (eq category tag.productCategory)}}
+                                            <li id="{{tag.tagName}}">
+                                                <label id="{{tag.tagName}}">{{input type="checkbox" name=tag.tagName change=(action
+                                                    composerComponent.actions.updateModelTags value="target") checked=tag.isChecked }}
+                                                    {{tag.tagName}}
+                                                </label>
+                                            </li>
+                                        {{/if}}
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        {{/each}}
+                    </div>
                 </div>
-                <div class="tag-list-section">
-                    {{#each composerComponent.sagProductCategories as |category|}}
-                        <div id={{category}} class="select-tag-category">
-                            <ul>
-                                {{#each composerComponent.productTags as |tag|}}
-                                    {{#if (eq category tag.productCategory)}}
-                                        <li id="{{tag.tagName}}">
-                                            <label id="{{tag.tagName}}">{{input type="checkbox" name=tag.tagName change=(action
-                                                composerComponent.actions.updateModelTags value="target") checked=tag.isChecked }}
-                                                {{tag.tagName}}
-                                            </label>
-                                        </li>
-                                    {{/if}}
-                                {{/each}}
-                            </ul>
-                        </div>
-                    {{/each}}
-                </div>
-            </div>
+            {{/if}}
         </div>
         {{popup-input-tip validation=composerComponent.tagValidation}}
     {{/unless}}
