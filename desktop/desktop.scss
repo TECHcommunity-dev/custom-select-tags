@@ -143,7 +143,7 @@
     background-color: #08c;
 }
 
-#reply-control.composer-action-createTopic, #reply-control.composer-action-edit, #reply-control.composer-action-privateMessage{
+#reply-control.composer-action-createTopic, #reply-control.composer-action-edit, #reply-control.composer-action-privateMessage, #reply-control.composer-action-createSharedDraft{
     &.fullscreen .custom-select-tag-title {
         display: none !important;
     }
