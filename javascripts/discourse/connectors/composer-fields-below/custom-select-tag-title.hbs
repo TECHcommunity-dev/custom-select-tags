@@ -1,0 +1,10 @@
+{{#if composerComponent.canEditTags}}
+    {{#unless site.mobileView}}
+        {{#unless model.viewFullscreen}}
+        <div class="select-tags-title">
+            <div class="title-text">Please select product tags from the list</div>
+            <img src="{{theme-setting "theme_uploads.chevron"}}" class="chevron-img" />
+        </div> 
+        {{/unless}} 
+    {{/unless}}
+{{/if}}
