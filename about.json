@@ -3,8 +3,5 @@
   "authors": "Webdirekt",
   "about_url": "https://github.com/TECHcommunity-dev/custom-select-tags/blob/master/README.md",
   "license_url": "https://github.com/TECHcommunity-dev/custom-select-tags/blob/master/LICENSE",
-  "component": true,
-  "assets": {
-    "chevron": "assets/chevron.png"
-  }
+  "component": true
 }

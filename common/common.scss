@@ -21,12 +21,12 @@
 }
 
 .select-tags-body .tag-list-section li#IoT, .select-tags-body .tag-list-section li#API-Management, 
-.select-tags-body .tag-list-section li#Mainframe-Integration, .select-tags-body .tag-list-section li#webMethods-cloud {
+.select-tags-body .tag-list-section li#Mainframe-Integration, .select-tags-body .tag-list-section li#webMethods-cloud, .select-tags-body .tag-list-section li#Adabas-Natural {
     display: none;
 } 
 
 .select-tags-body .tag-list-section #Cumulocity-IoT, .select-tags-body .tag-list-section #TrendMiner, 
-.select-tags-body .tag-list-section #Streaming-Analytics-Apama {
+.select-tags-body .tag-list-section #Streaming-Analytics-Apama, .select-tags-body .tag-list-section #Adabas, .select-tags-body .tag-list-section #Natural {
     font-weight: bold !important;
 }
 // ------ End of CSS Moved From The "my component" ------------
