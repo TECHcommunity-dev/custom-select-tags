@@ -1,6 +1,7 @@
 <!-- Override File: /app/assets/javascripts/discourse/controllers/composer.js.es6  To Customize "Tag Chooser" Functionality for Topic -->
 <script type="text/discourse-plugin" version="0.8">
     api.modifyClass('controller:composer',{
+        pluginId: "techcommunity-composer",
         //Sample data is stored in sagProduct if unable to load data from file.
         sagProductTags: {
             "IoT": ["IoT", "Cumulocity-IoT", "IoT-Device-Connectivity", "IoT-Data-Analytics", "IoT-Edge", "IoT-Solution-Accelerators", 
@@ -59,15 +60,13 @@
                     this.model.set("tags", Ember.A());
                 }
                 
-		//Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
-                //var sagTagObj= this.get('productTags').findBy("tagName", tagName);
-		var sagTagObj = this.composerComponent.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tagName.toLowerCase());
+		        //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
+		        var sagTagObj = this.composerComponent.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tagName.toLowerCase());
                 
                 //If checbox is selected the add tagName to "model.tags" array.
                 if(isChecked){
                     Ember.set(sagTagObj,"isChecked", true);
                     //Auto select Parent Tag if child is selected.
-                    //this.send('autoSelectParentTag',sagTagObj);
                     this.composerComponent.send("autoSelectParentTag", sagTagObj);
                     //Add tag to model
                     if(this.model.tags.findIndex(item => item.toLowerCase() === sagTagObj.tagName.toLowerCase()) == -1){
@@ -152,35 +151,35 @@
                             }
                     }
 		    
-		    //auto select Integration-Server-and-ESB and webMethods-cloud if Cloud-Container is selected - Mariela
+		            //auto select Integration-Server-and-ESB and webMethods-cloud if Cloud-Container is selected - Mariela
                     if(sagTagObj.tagName == "Cloud-Container") {
                         var esbInt = this.composerComponent.get('productTags').findBy("tagName", "Integration-Server-and-ESB");
                             if(this.model.tags.indexOf(esbInt.tagName) == -1) {
                                 Ember.set(esbInt,"isChecked", true);
                                 this.model.tags.pushObject(esbInt.tagName);
                             }
-			 var webcloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
+			            var webcloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
                             if(this.model.tags.indexOf(webcloud.tagName) == -1) {
                                 Ember.set(webcloud,"isChecked", true);
                                 this.model.tags.pushObject(webcloud.tagName);
                             }
                     }
 		    
-		    //auto select B2B-Integration and webMethods-cloud if webmethods-io-B2B is selected - Mariela
+		            //auto select B2B-Integration and webMethods-cloud if webmethods-io-B2B is selected - Mariela
                     if(sagTagObj.tagName == "webmethods-io-B2B") {
                         var b2bInt = this.composerComponent.get('productTags').findBy("tagName", "B2B-Integration");
                             if(this.model.tags.indexOf(b2bInt.tagName) == -1) {
                                 Ember.set(b2bInt,"isChecked", true);
                                 this.model.tags.pushObject(b2bInt.tagName);
                             }
-			 var webMcloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
+			            var webMcloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
                             if(this.model.tags.indexOf(webMcloud.tagName) == -1) {
                                 Ember.set(webMcloud,"isChecked", true);
                                 this.model.tags.pushObject(webMcloud.tagName);
                             }
                     }
 		    
-		    //auto select webMethods-cloud if webMethods-io-Integration is selected - Mariela
+		            //auto select webMethods-cloud if webMethods-io-Integration is selected - Mariela
                     if(sagTagObj.tagName == "webMethods-io-Integration") {
                         var webMethodsCloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
                             if(this.model.tags.indexOf(webMethodsCloud.tagName) == -1) {
@@ -309,7 +308,7 @@
                         this.model.tags.removeObject(flow_java_services.tagName);
                     }
 		    
-		      //auto deselect tags if webMethods-cloud is deselected - Mariela 
+		            //auto deselect tags if webMethods-cloud is deselected - Mariela 
                     if(sagTagObj.tagName == "webMethods-cloud") {
                         var cloudContainer = this.composerComponent.get('productTags').findBy("tagName", "Cloud-Container");
                         var webMethodsioInt = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-Integration");
@@ -345,9 +344,8 @@
                             this.model.set("tags", Ember.A());
                         }
                         
-			//Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
-                        //var sagTagObj= this.get('productTags').findBy("tagName", tag);
-			var sagTagObj = this.composerComponent.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
+                        //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
+                        var sagTagObj = this.composerComponent.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
 			
                         //If Entered tag is present in sag product tag list then change respective checkbox status to checked.  
                         //And also add tag to Model.
@@ -370,7 +368,7 @@
                     }    
                     //Clear the tag input field after adding tag.
                         this.composerComponent.set('tagInputValue','');  
-                        tagInput = document.getElementsByClassName("tag-input");
+                        let tagInput = document.getElementsByClassName("tag-input");
                         tagInput[0].value="";
                 }
             },
@@ -391,9 +389,8 @@
                         this.model.set("tags", Ember.A());
                     }
 
-		    //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
-                    //var sagTagObj= this.get('productTags').findBy("tagName", tag);
-		    var sagTagObj = this.composerComponent.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
+                    //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
+                    var sagTagObj = this.composerComponent.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
 		    
                     if(sagTagObj){
                         Ember.set(sagTagObj,"isChecked", true);    
@@ -416,7 +413,7 @@
                     
                     //Clear the tag input field after adding tag.
                         this.composerComponent.set('tagInputValue','');  
-                        tagInput = document.getElementsByClassName("tag-input");
+                        let tagInput = document.getElementsByClassName("tag-input");
                         tagInput[0].value="";
                 }
                 
@@ -424,8 +421,7 @@
             removeTag(tag){
 	    
                 //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
-                //var sagTagObj= this.get('productTags').findBy("tagName", tag);
-		var sagTagObj = this.composerComponent.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
+		        var sagTagObj = this.composerComponent.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
                 if(sagTagObj){
                     Ember.set(sagTagObj,"isChecked", false);    
                 }
@@ -438,7 +434,6 @@
             //Auto select Parent Tag if child is selected.
 		    if(sagTagObj){
 			    if( sagTagObj.productCategory.toLowerCase() !=  sagTagObj.tagName.toLowerCase()){
-                    //if(this.model.tags.indexOf(sagTagObj.productCategory) == -1){
 		            if(!(this.model.tags.find((tag) => tag.toLowerCase() == sagTagObj.productCategory.toLowerCase()))){
                         var parentTagObj= this.get('productTags').findBy("tagName", sagTagObj.productCategory);
                             Ember.set(parentTagObj,"isChecked", true);
@@ -459,8 +454,8 @@
 
 <!-- Override File: /app/assets/javascripts/discourse/routes/tags-show.js.es6 -->
 <script type="text/discourse-plugin" version="0.8">
-    api.modifyClass('route:tags-show',{
-        
+    api.modifyClass('route:tag-show',{
+       pluginId: "techcommunity-tag-show",
        actions:{
        	  //Modified createTopic action methods on 22-02-2021 as discourse update createTopic action method.
            createTopic() {
@@ -498,7 +493,6 @@
                             //Update select tags checkboxes based on pre-selected tags.
                             composerModel.tags.forEach((tag) => {
             		            //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
-                                        //var sagTagObj= composerController.get('productTags').findBy("tagName", tag);
             			        var sagTagObj = composerController.get('productTags').find((tagObj) => tagObj.tagName.toLowerCase() == tag.toLowerCase());
                                 //If Entered tag is present in sag product tag list then change respective checkbox status to checked.  
                                 if(sagTagObj){
