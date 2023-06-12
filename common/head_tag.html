@@ -9,7 +9,7 @@
             "webmethods": ["webmethods", "Integration-Server-and-ESB", "webMethods-io-Integration", "Adapters-and-E-Standards", 
             "Universal-Messaging-Broker", "Service-Designer", "Cloud-Container", "CloudStreams",
             "Flow-and-Java-Services", "AgileApps", 
-            "B2B-Integration", "webmethods-io-B2B", "EDI", "Managed-File-Transfer",
+            "B2B-Integration", "webmethods-io-B2B", "Managed-File-Transfer",
             "API-Management", "API-Gateway", "Developer-Portal", "AppMesh", "CentraSite", 
             "Command-Central", "BPM", "BAM", "MWS-CAF-Task-Engine", "Terracotta",
             "Mainframe-Integration", "EntireX", "ApplinX", "CONNX", "webMethods-cloud"],
@@ -100,9 +100,8 @@
                             }
                     }
                     
-                    //auto select b2b_integration if edi or managed file transfer are selected- Mariela
-                    if(sagTagObj.tagName == "EDI" || 
-                    sagTagObj.tagName == "Managed-File-Transfer") {
+                    //auto select b2b_integration if managed file transfer are selected- Mariela
+                    if(sagTagObj.tagName == "Managed-File-Transfer") {
                         var b2b_integration = this.composerComponent.get('productTags').findBy("tagName", "B2B-Integration");
                             if(this.model.tags.indexOf(b2b_integration.tagName) == -1) {
                                 Ember.set(b2b_integration,"isChecked", true);
@@ -234,13 +233,10 @@
                 //auto deselect tags if B2B-Integration is deselected - Mariela 
                     if(sagTagObj.tagName == "B2B-Integration") {
                         var webmethods_io_b2b = this.composerComponent.get('productTags').findBy("tagName", "webmethods-io-B2B");
-                        var edi = this.composerComponent.get('productTags').findBy("tagName", "EDI");
                         var managed_file_transfer = this.composerComponent.get('productTags').findBy("tagName", "Managed-File-Transfer");
                         Ember.set(webmethods_io_b2b,"isChecked", false);
-                        Ember.set(edi,"isChecked", false);
                         Ember.set(managed_file_transfer,"isChecked", false);
                         this.model.tags.removeObject(webmethods_io_b2b.tagName);
-                        this.model.tags.removeObject(edi.tagName);
                         this.model.tags.removeObject(managed_file_transfer.tagName);
                     }
                 //auto deselect tags if adabas is deselected - Mariela 
