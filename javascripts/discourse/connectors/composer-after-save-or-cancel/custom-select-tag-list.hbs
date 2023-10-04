@@ -1,17 +1,17 @@
 {{#unless site.mobileView}}
-    {{#if composerComponent.canEditTags}}
+    {{#if this.composerComponent.canEditTags}}
         {{#unless model.viewFullscreen}}
-            <div class="select-tags-list-wrapper {{if composerComponent.showPreview 'with-preview'}}" tabindex="5">
+            <div class="select-tags-list-wrapper {{if this.composerComponent.showPreview 'with-preview'}}" tabindex="5">
                 <div class="select-tags-body">
                     <div class="tag-list-section">
-                        {{#each composerComponent.sagProductCategories as |category|}}
+                        {{#each this.composerComponent.sagProductCategories as |category|}}
                             <div id={{category}} class="select-tag-category">
                                 <ul>
-                                    {{#each composerComponent.productTags as |tag|}}
+                                    {{#each this.composerComponent.productTags as |tag|}}
                                         {{#if (eq category tag.productCategory)}}
                                             <li id="{{tag.tagName}}">
                                                 <label id="{{tag.tagName}}">{{input type="checkbox" name=tag.tagName change=(action
-                                                    composerComponent.actions.updateModelTags value="target") checked=tag.isChecked }}
+                                                    this.composerComponent.actions.updateModelTags value="target") checked=tag.isChecked }}
                                                     {{tag.tagName}}
                                                 </label>
                                             </li>
@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            {{popup-input-tip validation=composerComponent.tagValidation}}
+            {{popup-input-tip validation=this.composerComponent.tagValidation}}
         {{/unless}}
     {{/if}}
 {{/unless}}

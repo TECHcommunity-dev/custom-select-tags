@@ -2,7 +2,7 @@ import { getOwner } from "discourse-common/lib/get-owner";
 
 export default {
     setupComponent(args, component) {
-        const composerComponent = getOwner(this).lookup("controller:composer");
+        const composerComponent = getOwner(this).lookup("service:composer");
         //Deselect all the tag checkboxes before loading composer if tags are not selected.
         if (!this.get('model.tags')) {
             composerComponent.deselectAll();
