@@ -1,7 +1,8 @@
 //custom-select-tags - desktop.scss
 
 // Hide the brand header when composer is open
-.composer-open .brand-header {
+/* Binjan; 2023.10.16; change new class name for .brand-header -> .b-header */
+.composer-open .b-header {
     display: none;
 }
 
