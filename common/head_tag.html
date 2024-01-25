@@ -74,8 +74,8 @@
             /*This action is called when State Changes of any check box under Select Tags section
                 Purpose: To add or remove tags from "model.tags" array based on checkbox selection
             */
-            updateModelTags(target) {
-
+            updateModelTags(event) {
+                let target = event.target;
                 //getting tags from the name attribute of currently clicked checkbox
                 var tagName = $(target).attr('name');
                 //getting value from the checked attribute of currently clicked checkbox
@@ -343,7 +343,8 @@
             /*This action is invoked when key is pressed in Tags Input field.
                 Purpose: Add tag to "model.tags" array if Key Enter Key Or Comma is pressed on Tag input field
             */
-            addTagByKeyPress(tag, event) {
+            addTagByKeyPress(event) {
+                let tag = event.target.value;
                 //If Enter key OR Comma key is pressed
                 if (event.keyCode == 13 || event.keyCode == 188) {
                     //If Comma is pressed then remove traling Commam from the tag string.
@@ -387,7 +388,7 @@
             /*
             This methods prevent to display character in Tag input filed when key is down(Specially done for <Comma> character)
             */
-            onKeyDown(value, event) {
+            onKeyDown(event) {
                 if (event.keyCode == 13 || event.keyCode == 188) {
                     event.preventDefault();
                 }

@@ -10,8 +10,13 @@
                                     {{#each this.composerComponent.productTags as |tag|}}
                                         {{#if (eq category tag.productCategory)}}
                                             <li id="{{tag.tagName}}">
-                                                <label id="{{tag.tagName}}">{{input type="checkbox" name=tag.tagName change=(action
-                                                    this.composerComponent.actions.updateModelTags value="target") checked=tag.isChecked }}
+                                                <label id="{{tag.tagName}}">
+                                                    <Input
+                                                      @type="checkbox"
+                                                      name={{tag.tagName}}
+                                                      {{on "change" (action this.composerComponent.actions.updateModelTags)}}
+                                                      @checked={{tag.isChecked}} 
+                                                    />
                                                     {{tag.tagName}}
                                                 </label>
                                             </li>
