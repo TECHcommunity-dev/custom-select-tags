@@ -1,4 +1,5 @@
 import { getOwner } from "@ember/application";
+import { set } from "@ember/object";
 
 export default {
   setupComponent(args, component) {
@@ -24,7 +25,7 @@ export default {
           //If Entered tag is present in sag product tag list then change respective checkbox status to checked.
           if (sagTagObj) {
             //Updated the checkbox status
-            Ember.set(sagTagObj, "isChecked", true);
+            set(sagTagObj, "isChecked", true);
           }
         });
       }

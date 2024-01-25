@@ -1,6 +1,8 @@
 <!-- Override File: /app/assets/javascripts/discourse/controllers/composer.js.es6  To Customize "Tag Chooser" Functionality for Topic -->
 <script type="text/discourse-plugin" version="0.8">
   const { default: EmberObject, set } = require("@ember/object");
+  const { A } = require('@ember/array');
+
     api.modifyClass('controller:composer', {
         pluginId: "techcommunity-composer",
         //Sample data is stored in sagProduct if unable to load data from file.
@@ -81,7 +83,7 @@
 
                 //If "model.tags" array is not initialize or undefined then initialize.
                 if (!this.model.get("tags") || this.model.get("tags") == undefined) {
-                    this.model.set("tags", Ember.A());
+                    this.model.set("tags", A());
                 }
 
                 //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
@@ -351,7 +353,7 @@
                     if (tag != "" && tag != "," && this.composerComponent.validateTag(tag)) {
                         //Initialize Model tags array if not.
                         if (!this.model.get("tags") || this.model.get("tags") == undefined) {
-                            this.model.set("tags", Ember.A());
+                            this.model.set("tags", A());
                         }
 
                         //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
@@ -396,7 +398,7 @@
             addTag(tag) {
                 if (tag != "" && tag != "," && this.composerComponent.validateTag(tag)) {
                     if (!this.model.get("tags") || this.model.get("tags") == undefined) {
-                        this.model.set("tags", Ember.A());
+                        this.model.set("tags", A());
                     }
 
                     //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
