@@ -1,6 +1,8 @@
 <!-- Override File: /app/assets/javascripts/discourse/controllers/composer.js.es6  To Customize "Tag Chooser" Functionality for Topic -->
 <script type="text/discourse-plugin" version="0.8">
   const { default: EmberObject, set } = require("@ember/object");
+  const { A } = require('@ember/array');
+
     api.modifyClass('controller:composer', {
         pluginId: "techcommunity-composer",
         //Sample data is stored in sagProduct if unable to load data from file.
@@ -72,8 +74,8 @@
             /*This action is called when State Changes of any check box under Select Tags section
                 Purpose: To add or remove tags from "model.tags" array based on checkbox selection
             */
-            updateModelTags(target) {
-
+            updateModelTags(event) {
+                let target = event.target;
                 //getting tags from the name attribute of currently clicked checkbox
                 var tagName = $(target).attr('name');
                 //getting value from the checked attribute of currently clicked checkbox
@@ -81,7 +83,7 @@
 
                 //If "model.tags" array is not initialize or undefined then initialize.
                 if (!this.model.get("tags") || this.model.get("tags") == undefined) {
-                    this.model.set("tags", Ember.A());
+                    this.model.set("tags", A());
                 }
 
                 //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
@@ -341,7 +343,8 @@
             /*This action is invoked when key is pressed in Tags Input field.
                 Purpose: Add tag to "model.tags" array if Key Enter Key Or Comma is pressed on Tag input field
             */
-            addTagByKeyPress(tag, event) {
+            addTagByKeyPress(event) {
+                let tag = event.target.value;
                 //If Enter key OR Comma key is pressed
                 if (event.keyCode == 13 || event.keyCode == 188) {
                     //If Comma is pressed then remove traling Commam from the tag string.
@@ -351,7 +354,7 @@
                     if (tag != "" && tag != "," && this.composerComponent.validateTag(tag)) {
                         //Initialize Model tags array if not.
                         if (!this.model.get("tags") || this.model.get("tags") == undefined) {
-                            this.model.set("tags", Ember.A());
+                            this.model.set("tags", A());
                         }
 
                         //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]
@@ -385,7 +388,7 @@
             /*
             This methods prevent to display character in Tag input filed when key is down(Specially done for <Comma> character)
             */
-            onKeyDown(value, event) {
+            onKeyDown(event) {
                 if (event.keyCode == 13 || event.keyCode == 188) {
                     event.preventDefault();
                 }
@@ -396,7 +399,7 @@
             addTag(tag) {
                 if (tag != "" && tag != "," && this.composerComponent.validateTag(tag)) {
                     if (!this.model.get("tags") || this.model.get("tags") == undefined) {
-                        this.model.set("tags", Ember.A());
+                        this.model.set("tags", A());
                     }
 
                     //Modified by Webdirekt to ignore case while checking/finding tags [Date:22-02-2021]

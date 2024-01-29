@@ -19,9 +19,14 @@
                         {{/each}}
                     </div>
                     <div class="tag-input-area">
-                        {{input type="text" value=composerComponent.tagInputValue key-down=(action
-                        composerComponent.actions.onKeyDown) key-up=(action composerComponent.actions.addTagByKeyPress)
-                        class="tag-input" placeholder="select below or type here…" }}
+                        <Input
+                          @type="text"
+                          @value={{composerComponent.tagInputValue}}
+                          {{on "keydown" (action composerComponent.actions.onKeyDown)}}
+                          {{on "keyup" (action composerComponent.actions.addTagByKeyPress)}}
+                          class="tag-input"
+                          placeholder="select below or type here…"
+                        />
                     </div>
                 </div>
                 <div class="add-tag-btn">
@@ -46,8 +51,13 @@
                                     {{#each composerComponent.productTags as |tag|}}
                                         {{#if (eq category tag.productCategory)}}
                                             <li id="{{tag.tagName}}">
-                                                <label id="{{tag.tagName}}">{{input type="checkbox" name=tag.tagName change=(action
-                                                    composerComponent.actions.updateModelTags value="target") checked=tag.isChecked }}
+                                                <label id="{{tag.tagName}}">
+                                                    <Input
+                                                      @type="checkbox"
+                                                      name={{tag.tagName}}
+                                                      {{on "change" (action composerComponent.actions.updateModelTags)}}
+                                                      @checked={{tag.isChecked}}
+                                                    />
                                                     {{tag.tagName}}
                                                 </label>
                                             </li>
