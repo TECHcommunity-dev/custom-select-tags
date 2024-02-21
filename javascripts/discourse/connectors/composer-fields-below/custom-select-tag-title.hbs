@@ -1,9 +1,11 @@
 {{#if this.composerComponent.canEditTags}}
     {{#unless site.mobileView}}
         {{#unless model.viewFullscreen}}
-        <div class="select-tags-title">
-            <div class="title-text">Please select product tags from the list &#8594;</div>
-        </div> 
+            {{#if this.composerComponent.isShowTags}}
+                <div class="select-tags-title">
+                    <div class="title-text">Please select product tags from the list &#8594;</div>
+                </div> 
+            {{/if}}
         {{/unless}} 
     {{/unless}}
 {{/if}}
