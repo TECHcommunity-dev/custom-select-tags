@@ -5,12 +5,11 @@ export default {
   setupComponent(args, component) {
     const composerComponent = getOwner(this).lookup("service:composer");
     
-    // Binjan; 2024.02.21
-    // composer draftKey eq new_private_message
+    // Binjan; 2024.05.02
+    // composer action eq privateMessage
     // don't show tag list
     let composerModel = this.get("model");
-    if (composerModel.action == "privateMessage" 
-      && (composerModel.draftKey == "new_private_message" || composerModel.draftKey == "private_message")) {
+    if (composerModel.action == "privateMessage") {
       set(composerComponent, "isShowTags", false)
     } 
     else {          
