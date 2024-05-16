@@ -125,12 +125,21 @@
                         }
                     }
 
-                    //auto select b2b_integration if managed file transfer are selected- Mariela
+                    //auto select b2b_integration if managed file transfer is selected- Mariela
                     if (sagTagObj.tagName == "Managed-File-Transfer") {
                         var b2b_integration = this.composerComponent.get('productTags').findBy("tagName", "B2B-Integration");
                         if (this.model.tags.indexOf(b2b_integration.tagName) == -1) {
                             set(b2b_integration, "isChecked", true);
                             this.model.tags.pushObject(b2b_integration.tagName);
+                        }
+                    }
+
+                    //auto select webmethods if connx is selected- Mariela
+                    if (sagTagObj.tagName == "CONNX") {
+                        var webmethods = this.composerComponent.get('productTags').findBy("tagName", "webmethods");
+                        if (this.model.tags.indexOf(webmethods.tagName) == -1) {
+                            set(webmethods, "isChecked", true);
+                            this.model.tags.pushObject(webmethods.tagName);
                         }
                     }
 
