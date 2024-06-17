@@ -229,7 +229,7 @@
 
     .select-tags-list-wrapper .select-tags-body .tag-list-section {
         flex-direction: column;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         #webmethods ul {
             column-count: 1 !important;
         }
