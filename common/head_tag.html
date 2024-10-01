@@ -100,50 +100,50 @@
                         this.model.tags.pushObject(tagName);
                     }
 
-                    //auto select API-Management tag if api-gateway, developer-portal are selected - Mariela
+                    /*auto select API-Management tag if api-gateway, developer-portal are selected - Mariela
                     if (sagTagObj.tagName == "API-Gateway" || sagTagObj.tagName == "Developer-Portal") {
                         var api_management = this.composerComponent.get('productTags').findBy("tagName", "API-Management");
                         if (this.model.tags.indexOf(api_management.tagName) == -1) {
                             set(api_management, "isChecked", true);
                             this.model.tags.pushObject(api_management.tagName);
                         }
-                    }
+                    }*/
 
-                    //auto select BPM if mws-caf-task-engine are selected - Mariela
+                    /*auto select BPM if mws-caf-task-engine are selected - Mariela
                     if (sagTagObj.tagName == "MWS-CAF-Task-Engine") {
                         var bpm = this.composerComponent.get('productTags').findBy("tagName", "BPM");
                         if (this.model.tags.indexOf(bpm.tagName) == -1) {
                             set(bpm, "isChecked", true);
                             this.model.tags.pushObject(bpm.tagName);
                         }
-                    }
+                    }*/
 
-                    //auto select mainframe-integration if entirex or connx are selected- Mariela
+                    /*auto select mainframe-integration if entirex or connx are selected- Mariela
                     if (sagTagObj.tagName == "EntireX" || sagTagObj.tagName == "CONNX") {
                         var mainframe_integration = this.composerComponent.get('productTags').findBy("tagName", "Mainframe-Integration");
                         if (this.model.tags.indexOf(mainframe_integration.tagName) == -1) {
                             set(mainframe_integration, "isChecked", true);
                             this.model.tags.pushObject(mainframe_integration.tagName);
                         }
-                    }
+                    }*/
 
-                    //auto select b2b_integration if managed file transfer is selected- Mariela
+                    /*auto select b2b_integration if managed file transfer is selected- Mariela
                     if (sagTagObj.tagName == "Managed-File-Transfer") {
                         var b2b_integration = this.composerComponent.get('productTags').findBy("tagName", "B2B-Integration");
                         if (this.model.tags.indexOf(b2b_integration.tagName) == -1) {
                             set(b2b_integration, "isChecked", true);
                             this.model.tags.pushObject(b2b_integration.tagName);
                         }
-                    }
+                    }*/
 
-                    //auto select webmethods if connx is selected- Mariela
+                    /*auto select webmethods if connx is selected- Mariela
                     if (sagTagObj.tagName == "CONNX") {
                         var webmethods = this.composerComponent.get('productTags').findBy("tagName", "webmethods");
                         if (this.model.tags.indexOf(webmethods.tagName) == -1) {
                             set(webmethods, "isChecked", true);
                             this.model.tags.pushObject(webmethods.tagName);
                         }
-                    }
+                    }*/
 
                     //auto select Adabas if Adabas-on-Mainframes or Adabas-on-Linux are selected- Mariela
                     if (sagTagObj.tagName == "Adabas-on-Mainframes" || sagTagObj.tagName == "Adabas-on-Linux") {
@@ -174,7 +174,7 @@
                         }
                     }
 
-                    //auto select Integration-Server-and-ESB if Adapters-and-E-Standards, Service-Designer, CloudStreams are selected - Mariela
+                    /*auto select Integration-Server-and-ESB if Adapters-and-E-Standards, Service-Designer, CloudStreams are selected - Mariela
                     if (sagTagObj.tagName == "Adapters-and-E-Standards" ||
                         sagTagObj.tagName == "Service-Designer" || sagTagObj.tagName == "CloudStreams") {
                         var esb = this.composerComponent.get('productTags').findBy("tagName", "Integration-Server-and-ESB");
@@ -182,9 +182,9 @@
                             set(esb, "isChecked", true);
                             this.model.tags.pushObject(esb.tagName);
                         }
-                    }
+                    }*/
 
-                    //auto select B2B-Integration and webMethods-cloud if webmethods-io-B2B is selected - Mariela
+                    /*auto select B2B-Integration and webMethods-cloud if webmethods-io-B2B is selected - Mariela
                     if (sagTagObj.tagName == "webmethods-io-B2B") {
                         var b2bInt = this.composerComponent.get('productTags').findBy("tagName", "B2B-Integration");
                         if (this.model.tags.indexOf(b2bInt.tagName) == -1) {
@@ -196,22 +196,22 @@
                             set(webMcloud, "isChecked", true);
                             this.model.tags.pushObject(webMcloud.tagName);
                         }
-                    }
+                    }*/
 
-                    //auto select webMethods-cloud if webMethods-io-Integration is selected - Mariela
+                    /*auto select webMethods-cloud if webMethods-io-Integration is selected - Mariela
                     if (sagTagObj.tagName == "webMethods-io-Integration") {
                         var webMethodsCloud = this.composerComponent.get('productTags').findBy("tagName", "webMethods-cloud");
                         if (this.model.tags.indexOf(webMethodsCloud.tagName) == -1) {
                             set(webMethodsCloud, "isChecked", true);
                             this.model.tags.pushObject(webMethodsCloud.tagName);
                         }
-                    }
+                    }*/
 
                 } else { //Else remove tagName to "model.tags" array.
 
                     set(sagTagObj, "isChecked", false);
 
-                    //auto deselect api-gateway and developer-portal if API-Management is deselected - Mariela
+                    /*auto deselect api-gateway and developer-portal if API-Management is deselected - Mariela
                     if (sagTagObj.tagName == "API-Management") {
                         var api_gateway = this.composerComponent.get('productTags').findBy("tagName", "API-Gateway");
                         var developer_portal = this.composerComponent.get('productTags').findBy("tagName", "Developer-Portal");
@@ -219,16 +219,16 @@
                         set(developer_portal, "isChecked", false);
                         this.model.tags.removeObject(api_gateway.tagName);
                         this.model.tags.removeObject(developer_portal.tagName);
-                    }
+                    }*/
 
-                    //auto deselect tags if BPM is deselected - Mariela
+                    /*auto deselect tags if BPM is deselected - Mariela
                     if (sagTagObj.tagName == "BPM") {
                         var mws = this.composerComponent.get('productTags').findBy("tagName", "MWS-CAF-Task-Engine");
                         set(mws, "isChecked", false);
                         this.model.tags.removeObject(mws.tagName);
-                    }
+                    }*/
 
-                    //auto deselect tags if Mainframe-Integration is deselected - Mariela
+                    /*auto deselect tags if Mainframe-Integration is deselected - Mariela
                     if (sagTagObj.tagName == "Mainframe-Integration") {
                         var entirex = this.composerComponent.get('productTags').findBy("tagName", "EntireX");
                         var connx = this.composerComponent.get('productTags').findBy("tagName", "CONNX");
@@ -236,9 +236,9 @@
                         set(connx, "isChecked", false);
                         this.model.tags.removeObject(entirex.tagName);
                         this.model.tags.removeObject(connx.tagName);
-                    }
+                    }*/
 
-                    //auto deselect tags if B2B-Integration is deselected - Mariela
+                    /*auto deselect tags if B2B-Integration is deselected - Mariela
                     if (sagTagObj.tagName == "B2B-Integration") {
                         var webmethods_io_b2b = this.composerComponent.get('productTags').findBy("tagName", "webmethods-io-B2B");
                         var managed_file_transfer = this.composerComponent.get('productTags').findBy("tagName", "Managed-File-Transfer");
@@ -246,7 +246,7 @@
                         set(managed_file_transfer, "isChecked", false);
                         this.model.tags.removeObject(webmethods_io_b2b.tagName);
                         this.model.tags.removeObject(managed_file_transfer.tagName);
-                    }
+                    }*/
 
                     //auto deselect tags if adabas is deselected - Mariela
                     if (sagTagObj.tagName == "Adabas") {
@@ -290,7 +290,7 @@
                         this.model.tags.removeObject(iot_platform.tagName);
                     }
 
-                    //auto deselect tags if Integration-Server-and-ESB is deselected - Mariela
+                    /*auto deselect tags if Integration-Server-and-ESB is deselected - Mariela
                     if (sagTagObj.tagName == "Integration-Server-and-ESB") {
                         var adapters_e_standarts = this.composerComponent.get('productTags').findBy("tagName", "Adapters-and-E-Standards");
                         var service_designer = this.composerComponent.get('productTags').findBy("tagName", "Service-Designer");
@@ -301,9 +301,9 @@
                         this.model.tags.removeObject(adapters_e_standarts.tagName);
                         this.model.tags.removeObject(service_designer.tagName);
                         this.model.tags.removeObject(cloudstreams.tagName);
-                    }
+                    }*/
 
-                    //auto deselect tags if webMethods-cloud is deselected - Mariela
+                    /*auto deselect tags if webMethods-cloud is deselected - Mariela
                     if (sagTagObj.tagName == "webMethods-cloud") {
                         var webMethodsioInt = this.composerComponent.get('productTags').findBy("tagName", "webMethods-io-Integration");
                         var webMethodsioB2B = this.composerComponent.get('productTags').findBy("tagName", "webmethods-io-B2B");
@@ -311,7 +311,7 @@
                         set(webMethodsioB2B, "isChecked", false);
                         this.model.tags.removeObject(webMethodsioInt.tagName);
                         this.model.tags.removeObject(webMethodsioB2B.tagName);
-                    }
+                    }*/
 
                     set(sagTagObj, "isChecked", false);
                     let tagIndex = this.model.tags.findIndex(tag => tagName.toLowerCase() === tag.toLowerCase());
