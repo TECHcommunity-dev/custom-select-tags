@@ -228,8 +228,8 @@
     }
 
     .select-tags-list-wrapper .select-tags-body .tag-list-section {
-        flex-direction: column;
-        flex-wrap: nowrap;
+     // flex-direction: column;
+     // flex-wrap: nowrap;
         #webmethods ul {
             column-count: 1 !important;
         }
